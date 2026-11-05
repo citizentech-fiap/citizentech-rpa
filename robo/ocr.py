@@ -206,19 +206,17 @@ PALAVRAS_CHAVE: dict[str, list[tuple[str, float]]] = {
         ("conta de agua", 0.4), ("energia eletrica", 0.2), ("agua e esgoto", 0.2), ("consumo do mes", 0.2),
         ("kwh", 0.15), ("valor a pagar", 0.15), ("vencimento", 0.1), ("titular", 0.1), ("endereco", 0.1),
     ],
-    "carteira_trabalho": [
-        ("carteira de trabalho e previdencia social", 0.7), ("carteira de trabalho", 0.45), ("ctps", 0.25),
-        ("data de admissao", 0.15), ("serie", 0.1), ("cargo", 0.1), ("ministerio do trabalho", 0.1),
+    "caf": [
+        ("registro de inscricao no cadastro nacional da agricultura familiar", 0.8),
+        ("cadastro nacional da agricultura familiar", 0.7), ("ricaf", 0.8),
+        ("extrato do caf", 0.7), ("comprovante de inscricao no caf", 0.7),
+        ("unidade familiar de producao agraria", 0.3), ("caf", 0.2),
     ],
-    "termo_rescisao": [
-        ("termo de rescisao do contrato de trabalho", 0.8), ("termo de rescisao", 0.6), ("trct", 0.3),
-        ("causa do afastamento", 0.3), ("data de afastamento", 0.2), ("verbas rescisorias", 0.3),
-        ("dispensa sem justa causa", 0.15), ("rescisao", 0.15),
-    ],
-    "titulo_eleitor": [
-        ("titulo eleitoral", 0.7), ("titulo de eleitor", 0.7), ("justica eleitoral", 0.4),
-        ("tribunal superior eleitoral", 0.3), ("nome do eleitor", 0.2), ("zona", 0.1), ("secao", 0.1),
-        ("eleitor", 0.1),
+    "comprovante_posse_terra": [
+        ("contrato de arrendamento rural", 0.8), ("escritura publica de imovel rural", 0.8),
+        ("declaracao de posse", 0.7), ("comprovante de posse", 0.7),
+        ("sindicato dos trabalhadores rurais", 0.3), ("imovel rural", 0.2),
+        ("propriedade da terra", 0.3), ("hectares", 0.1),
     ],
     "certidao_civil": [
         ("certidao de nascimento", 0.7), ("certidao de casamento", 0.7), ("registro civil das pessoas naturais", 0.4),
@@ -226,6 +224,8 @@ PALAVRAS_CHAVE: dict[str, list[tuple[str, float]]] = {
         ("data do casamento", 0.1),
     ],
     "comprovante_renda": [
+        ("nota fiscal de produtor rural", 0.8), ("declaracao de renda", 0.8),
+        ("renda declarada", 0.2), ("rendimentos da agricultura familiar", 0.3),
         ("comprovante de rendimentos", 0.7), ("comprovante de renda", 0.7), ("contracheque", 0.6),
         ("holerite", 0.6), ("demonstrativo de pagamento", 0.5), ("salario bruto", 0.25),
         ("valor liquido", 0.2), ("descontos", 0.1), ("competencia", 0.1), ("rendimentos", 0.15),
@@ -288,13 +288,19 @@ def _forca(expr: str, norm: str, colado: str, tokens: list[str], profundo: bool 
 
 def doc_scores(text: str) -> dict[str, float]:
     """Pontuação 0–1 de cada tipo canônico para o texto."""
+    try:
+        tipos = load_config().get("document_types", {}) or {}
+    except Exception as exc:
+        log.warning("Catálogo de documentos indisponível: %s", exc)
+        return {}
     norm = _normalizar(text)
     if not norm:
-        return {t: 0.0 for t in PALAVRAS_CHAVE}
+        return {tipo: 0.0 for tipo in tipos}
     colado = norm.replace(" ", "")
     tokens = norm.split()
     scores = {}
-    for tipo, exprs in PALAVRAS_CHAVE.items():
+    for tipo, descricao in tipos.items():
+        exprs = PALAVRAS_CHAVE.get(tipo, [(_normalizar(descricao), 0.7)])
         total = sum(peso * _forca(expr, norm, colado, tokens, profundo=peso >= PESO_PROFUNDO) for expr, peso in exprs)
         scores[tipo] = round(min(1.0, total), 3)
     return scores
@@ -303,6 +309,8 @@ def doc_scores(text: str) -> dict[str, float]:
 def identify_doc_type(text: str) -> tuple[str | None, float]:
     """Tipo canônico mais provável e sua pontuação (0–1). (None, 0.0) se nada casar."""
     scores = doc_scores(text)
+    if not scores:
+        return None, 0.0
     tipo, score = max(scores.items(), key=lambda kv: kv[1])
     if score <= 0:
         return None, 0.0

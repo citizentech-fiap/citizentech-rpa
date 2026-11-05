@@ -17,8 +17,9 @@ SHEETS = {
     "solicitacoes": ["run_id", "request_id", "data_envio", "service_id", "confianca", "segunda_opcao",
                      "decisao", "motivo",
                      "docs_presentes", "docs_faltantes", "docs_ilegiveis", "anexos_ausentes",
-                     "fonte_resposta", "motivo_fallback", "eml", "tempo_s"],
-    "revisao_humana": ["run_id", "request_id", "motivo", "service_id", "confianca", "status"],
+                     "fonte_resposta", "motivo_fallback", "eml", "tempo_s", "municipio", "uf", "cod_ibge"],
+    "revisao_humana": ["run_id", "request_id", "motivo", "service_id", "confianca", "status",
+                      "municipio", "uf", "cod_ibge"],
     "execucoes": ["run_id", "inicio", "fim", "lidas", "invalidas", "resolvidas", "revisao_humana",
                   "falhas", "puladas_duplicadas", "corpus_atualizados", "corpus_cache", "corpus_falhas"],
     "invalidas": ["run_id", "arquivo", "motivo"],
@@ -76,6 +77,13 @@ class ControlSheet:
             if name not in self.wb.sheetnames:
                 ws = self.wb.create_sheet(name)
                 ws.append(header)
+            else:
+                # Migra planilhas anteriores sem alterar as colunas e linhas já existentes.
+                ws = self.wb[name]
+                existentes = [c.value for c in ws[1]]
+                for coluna in header:
+                    if coluna not in existentes:
+                        ws.cell(1, ws.max_column + 1, coluna)
         if "Sheet" in self.wb.sheetnames and len(self.wb.sheetnames) > len(SHEETS):
             del self.wb["Sheet"]
 

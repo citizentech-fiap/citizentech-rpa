@@ -1,12 +1,15 @@
 {
   "request_id": "REQ-0032",
-  "data_envio": "2026-11-01T11:15:00-03:00",
-  "nome": "Joana Hipotética Rocha",
-  "email": "joana.ficticio44@exemplo.com",
-  "cpf": "218.682.344-00",
-  "texto": "quero sair da informalidade, sou pedreiro. abrir o mei é complicado?",
+  "data_envio": "2026-11-03T08:20:00-03:00",
+  "municipio": "Petrolina",
+  "uf": "PE",
+  "cod_ibge": "2611101",
+  "nome": "João Teste Pereira",
+  "email": "joao.ficticio62@exemplo.com",
+  "texto": "O laudo do técnico diz que a estiagem destruiu mais da metade da colheita. Como encaminho o pedido de ressarcimento do seguro-safra?",
   "anexos": [
+    "anexos/REQ-0032_documento_identidade.png",
     "anexos/REQ-0032_cpf.png",
-    "anexos/REQ-0032_rg.png"
+    "anexos/REQ-0032_caf.png"
   ]
 }

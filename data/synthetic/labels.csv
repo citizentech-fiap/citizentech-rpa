@@ -1,61 +1,61 @@
-request_id,service_id,docs_presentes,docs_ilegiveis,resultado_esperado,categoria,observacao
-REQ-0001,antecedentes_criminais,cpf;documento_identidade;carteira_trabalho,,resolvido,tipico,
-REQ-0002,cpf,certidao_civil;carteira_trabalho,,resolvido,docs_faltando,
-REQ-0003,carteira_trabalho_digital,,,invalido,invalido,anexo aponta para fora da inbox (inexistente)
-REQ-0004,cpf,documento_identidade,certidao_civil,revisao_humana,ilegivel,anexo certidao degradado (contraste)
-REQ-0005,seguro_desemprego,cpf;termo_rescisao,,resolvido,tipico,
-REQ-0006,passaporte,documento_identidade;titulo_eleitor;certidao_civil;cpf,,resolvido,tipico,
-REQ-0007,titulo_eleitor,,,invalido,invalido,anexos citados não existem no disco
-REQ-0008,cadunico,documento_identidade;carteira_trabalho;comprovante_residencia,,resolvido,docs_faltando,
-REQ-0009,fora_escopo,,,revisao_humana,fora_escopo,
-REQ-0010,passaporte,certidao_civil;titulo_eleitor;cpf;documento_identidade,,revisao_humana,ambiguo,alternativa=titulo_eleitor
-REQ-0011,bpc,cpf;documento_identidade;termo_rescisao,,resolvido,tipico,
-REQ-0012,antecedentes_criminais,documento_identidade,,resolvido,docs_faltando,
-REQ-0013,seguro_desemprego,cpf,,resolvido,docs_faltando,
-REQ-0014,cpf,documento_identidade;certidao_civil,,resolvido,tipico,
-REQ-0015,bpc,documento_identidade;cpf;titulo_eleitor,,resolvido,tipico,
-REQ-0016,aposentadoria_idade,,,invalido,invalido,campo texto vazio
-REQ-0017,bpc,documento_identidade;cpf,,revisao_humana,ambiguo,alternativa=cadunico
-REQ-0018,mei,cpf;documento_identidade,,revisao_humana,ambiguo,alternativa=cpf
-REQ-0019,mei,cpf,,resolvido,docs_faltando,
-REQ-0020,seguro_desemprego,termo_rescisao,cpf,revisao_humana,ilegivel,anexo cpf degradado (desfoque)
-REQ-0021,fora_escopo,,,revisao_humana,fora_escopo,
-REQ-0022,seguro_desemprego,termo_rescisao;cpf,,revisao_humana,ambiguo,alternativa=aposentadoria_idade
-REQ-0023,bpc,cpf;documento_identidade,,resolvido,tipico,
-REQ-0024,titulo_eleitor,comprovante_residencia;documento_identidade,,resolvido,tipico,
-REQ-0025,passaporte,certidao_civil;comprovante_residencia;titulo_eleitor;cpf;documento_identidade,,resolvido,tipico,
-REQ-0026,fora_escopo,documento_identidade,,revisao_humana,fora_escopo,
-REQ-0027,antecedentes_criminais,,,invalido,invalido,campo texto ausente
-REQ-0028,cadunico,comprovante_residencia;cpf;documento_identidade,,resolvido,tipico,
-REQ-0029,mei,cpf;documento_identidade,,resolvido,tipico,
-REQ-0030,fora_escopo,comprovante_residencia,,revisao_humana,fora_escopo,
-REQ-0031,passaporte,comprovante_renda;documento_identidade;cpf;titulo_eleitor,,resolvido,docs_faltando,
-REQ-0032,mei,cpf;documento_identidade,,resolvido,tipico,
-REQ-0033,bpc,documento_identidade,,resolvido,docs_faltando,
-REQ-0034,antecedentes_criminais,documento_identidade;cpf;carteira_trabalho,,resolvido,tipico,
-REQ-0035,cadunico,documento_identidade;cpf;comprovante_residencia,,resolvido,tipico,
-REQ-0036,seguro_desemprego,cpf;documento_identidade;termo_rescisao,,resolvido,tipico,
-REQ-0037,carteira_trabalho_digital,cpf,,resolvido,tipico,
-REQ-0038,passaporte,certidao_civil;documento_identidade,,resolvido,docs_faltando,
-REQ-0039,seguro_desemprego,cpf;comprovante_residencia;termo_rescisao,,resolvido,tipico,
-REQ-0040,cpf,certidao_civil;termo_rescisao;documento_identidade,,resolvido,tipico,
-REQ-0041,fora_escopo,,,revisao_humana,fora_escopo,
-REQ-0042,aposentadoria_idade,documento_identidade;cpf,,resolvido,tipico,
-REQ-0043,bpc,documento_identidade,cpf,revisao_humana,ilegivel,anexo cpf degradado (rotacao)
-REQ-0044,mei,cpf;documento_identidade,,resolvido,tipico,
-REQ-0045,carteira_trabalho_digital,cpf,,revisao_humana,ambiguo,alternativa=antecedentes_criminais
-REQ-0046,passaporte,titulo_eleitor;documento_identidade;certidao_civil,cpf,revisao_humana,ilegivel,anexo cpf degradado (ruido)
-REQ-0047,carteira_trabalho_digital,documento_identidade,,resolvido,docs_faltando,
-REQ-0048,cadunico,,,invalido,invalido,JSON truncado (malformado)
-REQ-0049,titulo_eleitor,documento_identidade,,resolvido,docs_faltando,
-REQ-0050,seguro_desemprego,termo_rescisao,,resolvido,docs_faltando,
-REQ-0051,fora_escopo,,,revisao_humana,fora_escopo,
-REQ-0052,aposentadoria_idade,cpf;carteira_trabalho,,resolvido,docs_faltando,
-REQ-0053,aposentadoria_idade,documento_identidade;cpf,,resolvido,tipico,
-REQ-0054,titulo_eleitor,comprovante_residencia;documento_identidade,,resolvido,tipico,
-REQ-0055,carteira_trabalho_digital,cpf,,resolvido,tipico,
-REQ-0056,mei,,,invalido,invalido,JSON com aspas simples e vírgula sobrando (malformado)
-REQ-0057,cadunico,comprovante_residencia;cpf;documento_identidade,,resolvido,tipico,
-REQ-0058,aposentadoria_idade,comprovante_renda;cpf;documento_identidade,,resolvido,tipico,
-REQ-0059,titulo_eleitor,comprovante_residencia,documento_identidade,revisao_humana,ilegivel,anexo rg degradado (pixelado)
-REQ-0060,seguro_desemprego,termo_rescisao;cpf,,revisao_humana,ambiguo,alternativa=mei
+request_id,service_id,docs_presentes,docs_ilegiveis,resultado_esperado,categoria,observacao,municipio,uf,cod_ibge
+REQ-0001,garantia_safra,caf;cpf,documento_identidade,revisao_humana,ilegivel,anexo documento_identidade degradado (desfoque),Delmiro Gouveia,AL,2702405
+REQ-0002,pronaf,,,invalido,invalido,campo texto ausente,Petrolina,PE,2611101
+REQ-0003,caf,comprovante_posse_terra;cpf;comprovante_renda,,resolvido,tipico,,Petrolina,PE,2611101
+REQ-0004,salario_maternidade_rural,cpf,documento_identidade,revisao_humana,ilegivel,anexo documento_identidade degradado (pixelado),Cajazeiras,PB,2503704
+REQ-0005,garantia_safra,comprovante_renda;documento_identidade,,resolvido,docs_faltando,,Serra Talhada,PE,2613909
+REQ-0006,fora_escopo,documento_identidade,,revisao_humana,fora_escopo,,Petrolina,PE,2611101
+REQ-0007,cpf,documento_identidade,,resolvido,docs_faltando,,Arcoverde,PE,2601201
+REQ-0008,caf,cpf;comprovante_posse_terra,comprovante_renda,revisao_humana,ilegivel,anexo comprovante_renda degradado (ruido),Salgueiro,PE,2612208
+REQ-0009,bpc,cpf;documento_identidade,,resolvido,tipico,,Crateús,CE,2304103
+REQ-0010,caf,documento_identidade;comprovante_posse_terra;comprovante_renda;cpf,,resolvido,tipico,,Sousa,PB,2516201
+REQ-0011,pronaf,cpf;comprovante_posse_terra;caf;documento_identidade,,revisao_humana,ambiguo,alternativa=garantia_safra,Petrolina,PE,2611101
+REQ-0012,cadunico,comprovante_residencia;cpf;documento_identidade,,revisao_humana,ambiguo,alternativa=bolsa_familia,Senhor do Bonfim,BA,2930105
+REQ-0013,bolsa_familia,comprovante_residencia;documento_identidade;caf;cpf,,resolvido,tipico,,Serra Talhada,PE,2613909
+REQ-0014,pronaf,comprovante_posse_terra;cpf;documento_identidade;caf,,resolvido,tipico,,Ouricuri,PE,2609907
+REQ-0015,cadunico,cpf;comprovante_residencia;documento_identidade,,resolvido,tipico,,Tauá,CE,2313302
+REQ-0016,aposentadoria_rural,cpf;comprovante_posse_terra;documento_identidade,,resolvido,tipico,,Salgueiro,PE,2612208
+REQ-0017,cadunico,cpf;comprovante_residencia;documento_identidade,,resolvido,tipico,,Salgueiro,PE,2612208
+REQ-0018,cpf,certidao_civil;documento_identidade,,resolvido,tipico,,Santana do Ipanema,AL,2708006
+REQ-0019,cadunico,,,invalido,invalido,anexo aponta para fora da inbox (inexistente),Serra Talhada,PE,2613909
+REQ-0020,fora_escopo,,,revisao_humana,fora_escopo,,Santana do Ipanema,AL,2708006
+REQ-0021,garantia_safra,caf;cpf;documento_identidade,,resolvido,tipico,,Serra Talhada,PE,2613909
+REQ-0022,salario_maternidade_rural,caf,,resolvido,docs_faltando,,Irecê,BA,2914604
+REQ-0023,cadunico,cpf;documento_identidade;comprovante_residencia,,resolvido,tipico,,Sousa,PB,2516201
+REQ-0024,cadunico,documento_identidade;comprovante_residencia;certidao_civil,,resolvido,docs_faltando,,Crateús,CE,2304103
+REQ-0025,aposentadoria_rural,documento_identidade,cpf,revisao_humana,ilegivel,anexo cpf degradado (rotacao),São Raimundo Nonato,PI,2210607
+REQ-0026,fora_escopo,,,revisao_humana,fora_escopo,,Petrolina,PE,2611101
+REQ-0027,caf,,,invalido,invalido,JSON com aspas simples e vírgula sobrando (malformado),Salgueiro,PE,2612208
+REQ-0028,fora_escopo,comprovante_residencia,,revisao_humana,fora_escopo,,Patos,PB,2510808
+REQ-0029,aposentadoria_rural,cpf,,resolvido,docs_faltando,,Tauá,CE,2313302
+REQ-0030,garantia_safra,documento_identidade;cpf,,resolvido,docs_faltando,,Tauá,CE,2313302
+REQ-0031,pronaf,caf;documento_identidade;comprovante_posse_terra,cpf,revisao_humana,ilegivel,anexo cpf degradado (contraste),Arcoverde,PE,2601201
+REQ-0032,garantia_safra,documento_identidade;cpf;caf,,resolvido,tipico,,Petrolina,PE,2611101
+REQ-0033,aposentadoria_rural,documento_identidade;cpf,,resolvido,tipico,,Patos,PB,2510808
+REQ-0034,pronaf,cpf;caf;comprovante_posse_terra;documento_identidade,,resolvido,tipico,,Serra Talhada,PE,2613909
+REQ-0035,bpc,documento_identidade;cpf,,resolvido,tipico,,Quixadá,CE,2311306
+REQ-0036,pronaf,documento_identidade;caf;cpf,,resolvido,docs_faltando,,Delmiro Gouveia,AL,2702405
+REQ-0037,salario_maternidade_rural,cpf;documento_identidade,,resolvido,tipico,,Delmiro Gouveia,AL,2702405
+REQ-0038,salario_maternidade_rural,,,invalido,invalido,anexos citados não existem no disco,Santana do Ipanema,AL,2708006
+REQ-0039,salario_maternidade_rural,documento_identidade;cpf,,resolvido,tipico,,Santana do Ipanema,AL,2708006
+REQ-0040,garantia_safra,,,invalido,invalido,JSON truncado (malformado),Serra Talhada,PE,2613909
+REQ-0041,pronaf,caf;comprovante_posse_terra;documento_identidade;cpf,,resolvido,tipico,,Ouricuri,PE,2609907
+REQ-0042,caf,caf;cpf;comprovante_renda;comprovante_posse_terra,,resolvido,tipico,,São Raimundo Nonato,PI,2210607
+REQ-0043,bolsa_familia,documento_identidade;comprovante_residencia;cpf,,resolvido,tipico,,São Raimundo Nonato,PI,2210607
+REQ-0044,salario_maternidade_rural,documento_identidade;cpf,,resolvido,tipico,,Nossa Senhora da Glória,SE,2804508
+REQ-0045,aposentadoria_rural,documento_identidade;cpf,,revisao_humana,ambiguo,alternativa=bpc,Serra Talhada,PE,2613909
+REQ-0046,cpf,documento_identidade;certidao_civil,,resolvido,tipico,,Ouricuri,PE,2609907
+REQ-0047,fora_escopo,,,revisao_humana,fora_escopo,,Patos,PB,2510808
+REQ-0048,bolsa_familia,cpf;comprovante_residencia;documento_identidade,,revisao_humana,ambiguo,alternativa=cadunico,Euclides da Cunha,BA,2910701
+REQ-0049,caf,cpf;comprovante_renda,,resolvido,docs_faltando,,Serra Talhada,PE,2613909
+REQ-0050,fora_escopo,,,revisao_humana,fora_escopo,,Petrolina,PE,2611101
+REQ-0051,caf,comprovante_posse_terra;comprovante_renda;cpf,,revisao_humana,ambiguo,alternativa=pronaf,Petrolina,PE,2611101
+REQ-0052,bolsa_familia,cpf;documento_identidade;comprovante_residencia,,resolvido,tipico,,Petrolina,PE,2611101
+REQ-0053,bolsa_familia,comprovante_residencia;cpf,,resolvido,docs_faltando,,Arcoverde,PE,2601201
+REQ-0054,caf,comprovante_renda;comprovante_posse_terra,,resolvido,docs_faltando,,Santana do Ipanema,AL,2708006
+REQ-0055,aposentadoria_rural,documento_identidade;cpf,,resolvido,tipico,,Petrolina,PE,2611101
+REQ-0056,aposentadoria_rural,,,invalido,invalido,campo texto vazio,Senhor do Bonfim,BA,2930105
+REQ-0057,garantia_safra,documento_identidade;caf;cpf,,resolvido,tipico,,Petrolina,PE,2611101
+REQ-0058,bpc,,,resolvido,docs_faltando,,Petrolina,PE,2611101
+REQ-0059,pronaf,comprovante_posse_terra;documento_identidade;comprovante_renda,,resolvido,docs_faltando,,Salgueiro,PE,2612208
+REQ-0060,garantia_safra,cpf;documento_identidade;caf,,revisao_humana,ambiguo,alternativa=pronaf,Serra Talhada,PE,2613909

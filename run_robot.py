@@ -79,6 +79,9 @@ def _move(src: Path, base: Path, dest_root: Path) -> None:
 def processar(req, corpus: dict, cfg: dict) -> dict:
     t0 = time.perf_counter()
     r = {"request_id": req.request_id, "data_envio": getattr(req, "data_envio", ""),
+         "municipio": getattr(req, "municipio", "") or "",
+         "uf": getattr(req, "uf", "") or "",
+         "cod_ibge": getattr(req, "cod_ibge", "") or "",
          "anexos_ausentes": [Path(a).name for a in getattr(req, "anexos_ausentes", [])]}
 
     # IA 1: classificação do serviço (texto mascarado dentro do classificador)
@@ -209,6 +212,9 @@ def main(argv: list[str] | None = None) -> dict:
             r = {"request_id": req.request_id, "decisao": "revisao_humana", "motivo": f"erro inesperado: {err}",
                  "confianca": 0.0}
         r["run_id"] = run_id
+        # Preserva localização também quando processar falha antes de devolver o resultado.
+        for campo in ("municipio", "uf", "cod_ibge"):
+            r[campo] = getattr(req, campo, "") or ""
         resultados.append(r)
         sheet.upsert("solicitacoes", r)
         if r["decisao"] == "revisao_humana":

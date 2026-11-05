@@ -1,4 +1,4 @@
-# CitizenTech — Robô de pré-triagem de serviços públicos (RPA + IA)
+# CitizenTech — Robô de pré-triagem para o agricultor familiar do semiárido (RPA + IA)
 
 Global Solution 2026.2 · FIAP · AI for Robotic Process Automation
 
@@ -12,14 +12,21 @@ Global Solution 2026.2 · FIAP · AI for Robotic Process Automation
 
 ## Problema
 
-Quem precisa de um serviço federal (seguro-desemprego, Cadastro Único, BPC, passaporte, CPF…) muitas vezes
-não sabe o nome oficial do serviço, quais documentos levar, por onde pedir e em quanto tempo sai. O resultado
-é pedido incompleto, viagem perdida ao atendimento e retrabalho para o órgão — e quem mais sofre é justamente
-o público dos benefícios sociais.
+Quando a seca chega ao semiárido, o agricultor familiar perde a safra e precisa correr atrás de vários
+benefícios ao mesmo tempo: Garantia-Safra, CAF (sem ele não há Garantia-Safra nem Pronaf), crédito do Pronaf,
+Cadastro Único e Bolsa Família, aposentadoria e salário-maternidade rurais. Ele procura o sindicato rural, a
+prefeitura ou a EMATER, muitas vezes depois de viajar quilômetros, e não sabe o nome oficial do programa,
+quais documentos levar nem o prazo. O resultado é pedido incompleto, viagem perdida e atendimento sobrecarregado
+justamente na pior hora.
 
-O robô faz a **pré-triagem**: lê a solicitação escrita do jeito do cidadão, identifica o serviço, confere os
-documentos anexados contra os exigidos na **Carta de Serviço oficial do gov.br**, e devolve por e-mail o que
-falta, onde pedir e o prazo, citando a fonte. O que ele não resolve com segurança vai para revisão humana.
+O robô faz a **pré-triagem** desses pedidos: lê a solicitação escrita do jeito do agricultor, identifica o
+serviço, confere os documentos anexados (inclusive o comprovante do CAF e o de posse da terra) contra os
+exigidos na **Carta de Serviço oficial do gov.br**, e devolve por e-mail o que falta, onde pedir e o prazo,
+citando a fonte. O que ele não resolve com segurança vai para revisão humana. Cada pedido carrega o município
+de origem, o que alimenta o painel de decisão do gestor (repositório `citizentech-dashboard`).
+
+Serviços atendidos (9): Garantia-Safra · CAF · Pronaf · aposentadoria por idade rural · salário-maternidade
+rural · Cadastro Único · Bolsa Família · BPC · CPF. Lista, órgãos e documentos em [config.yaml](config.yaml).
 
 ## Fluxo
 
@@ -92,11 +99,12 @@ responde por template; envio real de e-mail (SMTP) é opcional e desligado por p
 | `logs/robot.log` | log de todas as etapas |
 | `processed/`, `failed/` | solicitações já tratadas / rejeitadas (com `.motivo.txt`) |
 
-## Resultados (60 solicitações sintéticas rotuladas)
+## Resultados (solicitações sintéticas rotuladas)
 
-Classificação do serviço 95,8% · conferência de documentos 100% · decisão final 81,7% ·
-**0 respostas automáticas sobre o serviço errado** em 34 · 7 revisões humanas desnecessárias.
-Detalhes, limites e falhas demonstradas em [docs/evidencias.md](docs/evidencias.md).
+60 pedidos de agricultores de 23 municípios do semiárido: classificação do serviço 93,8% · documentos
+conferidos pelo OCR 100% · decisão final 76,7% · **0 respostas automáticas sobre o serviço errado** em 35 ·
+8 revisões humanas desnecessárias. Detalhes, limites e falhas demonstradas em
+[docs/evidencias.md](docs/evidencias.md).
 
 ## Estrutura
 
@@ -106,6 +114,7 @@ robo/                 collector, inbox, privacy, classifier, ocr, responder, out
 app/                  interface Streamlit
 scripts/              gerador de dados sintéticos
 data/synthetic/       treino do classificador, inbox de teste e rótulos
+data/municipios_semiarido.csv   23 municípios do semiárido (código IBGE e coordenadas)
 eval/                 avaliação do robô
 tests/                testes automáticos (python -m unittest discover -s tests)
 docs/                 quadro de temas, ética/ODS, evidências

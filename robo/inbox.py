@@ -39,6 +39,9 @@ class Request:
     anexos_abs: list[Path] = field(default_factory=list)
     # Extensão documentada: anexos citados no JSON que não existem no disco.
     anexos_ausentes: list[str] = field(default_factory=list)
+    municipio: str = ""
+    uf: str = ""
+    cod_ibge: str = ""
 
 
 @dataclass
@@ -108,6 +111,9 @@ def _validar(arquivo: Path, inbox_dir: Path, vistos: set[str]) -> Request | Inva
         nome=_texto_opcional(dados.get("nome")),
         email=_texto_opcional(dados.get("email")),
         cpf=_texto_opcional(dados.get("cpf")),
+        municipio=_texto_opcional(dados.get("municipio")) or "",
+        uf=_texto_opcional(dados.get("uf")) or "",
+        cod_ibge=_texto_opcional(dados.get("cod_ibge")) or "",
         anexos=list(anexos),
         source_path=arquivo,
         anexos_abs=anexos_abs,

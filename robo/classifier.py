@@ -1,4 +1,4 @@
-"""Classificador de intenção: qual serviço federal o cidadão quer (ou `fora_escopo`).
+"""Classificador de intenção dos pedidos do agricultor familiar (ou `fora_escopo`).
 
 Modelo: TF-IDF de palavras (1–2-gramas) + TF-IDF de caracteres (2–5, `char_wb`, robusto a
 erros de digitação e falta de acento) -> Regressão Logística multinomial.
@@ -19,7 +19,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from .config import path
+from .config import path, services
 from .privacy import mask_pii
 from .resilience import get_logger
 
@@ -55,6 +55,13 @@ def _carregar_treino(labels_csv: str | Path | None):
     df = pd.read_csv(csv_path, encoding="utf-8")
     df = df.dropna(subset=["texto", "service_id"])
     df["texto"] = df["texto"].astype(str).map(mask_pii)
+    esperadas = {s["id"] for s in services()} | {"fora_escopo"}
+    encontradas = set(df["service_id"])
+    if encontradas != esperadas:
+        raise ValueError("Classes de treino divergentes do catálogo: "
+                         f"ausentes={sorted(esperadas - encontradas)}, "
+                         f"desconhecidas={sorted(encontradas - esperadas)}. "
+                         "Gere novamente os dados sintéticos antes de treinar.")
     return df, csv_path
 
 
@@ -107,7 +114,11 @@ def _obter_modelo() -> dict[str, Any]:
                 if destino.is_file():
                     import joblib
                     try:
-                        _MODELO = joblib.load(destino)
+                        pacote = joblib.load(destino)
+                        esperadas = {s["id"] for s in services()} | {"fora_escopo"}
+                        if set(pacote["pipeline"].classes_) != esperadas:
+                            raise ValueError("modelo pertence a outro catálogo de serviços")
+                        _MODELO = pacote
                         log.info("Classificador carregado de %s", destino)
                     except Exception as exc:  # arquivo corrompido/incompatível -> re-treina
                         log.warning("Modelo %s inválido (%s); treinando novamente", destino, exc)

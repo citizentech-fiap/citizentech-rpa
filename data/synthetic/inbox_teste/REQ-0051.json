@@ -1,9 +1,16 @@
 {
   "request_id": "REQ-0051",
-  "data_envio": "2026-11-04T11:35:00-03:00",
-  "nome": "Francisca Amostra Lima",
-  "email": "francisca.ficticio17@exemplo.com",
-  "cpf": "014.837.706-00",
-  "texto": "Oi, vocês sabem me dizer se a farmácia do shopping abre domingo?",
-  "anexos": []
+  "data_envio": "2026-11-03T17:04:00-03:00",
+  "municipio": "Petrolina",
+  "uf": "PE",
+  "cod_ibge": "2611101",
+  "nome": "Raimundo Exemplar Gomes",
+  "email": "raimundo.ficticio16@exemplo.com",
+  "cpf": "089.504.211-46",
+  "texto": "Não tenho registro familiar atualizado e preciso financiar uma caixa d'água. Vim solicitar o CAF e a operação de crédito Pronaf juntos. Sou de Petrolina/PE, Comunidade Fictícia Mandacaru.",
+  "anexos": [
+    "anexos/REQ-0051_comprovante_posse_terra.png",
+    "anexos/REQ-0051_comprovante_renda.png",
+    "anexos/REQ-0051_cpf.png"
+  ]
 }

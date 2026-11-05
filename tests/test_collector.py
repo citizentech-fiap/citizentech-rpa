@@ -14,16 +14,16 @@ import requests
 
 from robo import collector as col
 
-SID = "seguro_desemprego"
+SID = "garantia_safra"
 
-HTML_CARTA = """<html><head><meta name="identificador" content="1045" /></head><body>
-<div class="visao-servico"><div class="titulo">Solicitar o Seguro-Desemprego
+HTML_CARTA = """<html><head><meta name="identificador" content="1234" /></head><body>
+<div class="visao-servico"><div class="titulo">Acessar o Benefício Garantia-Safra
 <span class="nomes-populares">seguro</span></div></div>
 <div class="servico-content"><ul class="servico">
  <li><a class="titulo" id="dados_basicos">O que é?</a><div class="conteudo"><p>Assistência financeira temporária
- ao trabalhador dispensado sem justa causa. Texto longo o bastante para passar na validação de conteúdo mínimo.</p></div></li>
- <li><a class="titulo" id="solicitantes">Quem pode utilizar este serviço?</a><div class="conteudo"><p>Trabalhadores formais
- demitidos sem justa causa.</p></div></li>
+ ao agricultor familiar com perda de safra por estiagem. Texto longo o bastante para passar na validação de conteúdo mínimo.</p></div></li>
+ <li><a class="titulo" id="solicitantes">Quem pode utilizar este serviço?</a><div class="conteudo"><p>Agricultores familiares
+ afetados pela seca.</p></div></li>
  <li><a class="titulo" id="etapas-servico">Etapas</a><div class="conteudo"><ol>
   <li><span>Solicitar</span><div><p>Faça o pedido.</p></div>
    <div class="subtitulo-etapa"><p class="titulo-documento">Canais de prestação</p><div>Web: <a href="https://exemplo.gov.br">Portal</a></div></div>
@@ -37,20 +37,20 @@ HTML_CARTA = """<html><head><meta name="identificador" content="1045" /></head><
 </ul></div></body></html>"""
 
 API_OK = {"hasErro": False, "resposta": {
-    "nome": "Solicitar o Seguro-Desemprego",
-    "descricao": "O Seguro-Desemprego garante assistência financeira temporária ao trabalhador dispensado sem justa causa.",
+    "nome": "Acessar o Benefício Garantia-Safra",
+    "descricao": "O Garantia-Safra garante assistência financeira temporária ao agricultor familiar com perda de safra por estiagem.",
     "gratuito": "true",
-    "contato": "Telefone 158",
-    "solicitantes": {"solicitante": [{"tipo": "Trabalhadores formais", "requisitos": "a) sem renda própria"}]},
+    "contato": "Canal fictício de atendimento",
+    "solicitantes": {"solicitante": [{"tipo": "Agricultores familiares", "requisitos": "a) sem renda própria"}]},
     "tempoTotalEstimado": {"entre": {"min": "31", "max": "60", "unidade": "dias-corridos"}},
     "validadeDocumento": {"tipo": "Sem validade"},
     "etapas": [{"titulo": "Solicitar", "descricao": "Peça pelo [Portal](https://exemplo.gov.br) ou app.",
-                "documentos": {"documentos": [{"nome": "Requerimento do Seguro-Desemprego"},
+                "documentos": {"documentos": [{"nome": "Requerimento do Garantia-Safra"},
                                               {"nome": "Número do CPF"}], "casos": []},
                 "canaisDePrestacao": {"canaisDePrestacao": [{"tipo": "web", "descricao": "[Portal de ServiÃ§os](https://exemplo.gov.br)"}],
                                       "casos": []},
                 "custos": {"custos": None, "casos": []}}],
-    "url": "https://www.gov.br/pt-br/servicos/solicitar-o-seguro-desemprego",
+    "url": "https://www.gov.br/pt-br/servicos/acessar-o-beneficio-garantia-safra",
 }}
 
 
@@ -94,7 +94,7 @@ class TestParsers(unittest.TestCase):
     def test_parse_html_mapeia_secoes(self):
         c = col._parse_html(HTML_CARTA)
         s = c["secoes"]
-        self.assertEqual(c["titulo"], "Solicitar o Seguro-Desemprego")
+        self.assertEqual(c["titulo"], "Acessar o Benefício Garantia-Safra")
         self.assertIn("CPF", s["documentos"])
         self.assertIn("Portal (https://exemplo.gov.br)", s["canais"])
         self.assertIn("Até 5 minuto(s)", s["prazos"])
