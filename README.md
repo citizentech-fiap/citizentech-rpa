@@ -6,9 +6,9 @@ Global Solution 2026.2 · FIAP · AI for Robotic Process Automation
 
 | Nome completo | RM |
 |---|---|
-| _preencher_ | _preencher_ |
-| _preencher_ | _preencher_ |
-| _preencher_ | _preencher_ |
+| Luís Fernando de Oliveira Salgado | RM561401 |
+| Ricardo de Paiva Melo | RM565522 |
+| Jonas Alaf | RM566479 |
 
 ## Problema
 
