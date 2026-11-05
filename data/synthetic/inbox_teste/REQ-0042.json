@@ -1,0 +1,12 @@
+{
+  "request_id": "REQ-0042",
+  "data_envio": "2026-11-02T12:10:00-03:00",
+  "nome": "Ana Modelo Oliveira",
+  "email": "ana.ficticio90@exemplo.com",
+  "cpf": "823.947.930-32",
+  "texto": "Prezados, venho requerer minha aposentadoria por idade urbana. Documentos anexos.",
+  "anexos": [
+    "anexos/REQ-0042_rg.png",
+    "anexos/REQ-0042_cpf.png"
+  ]
+}

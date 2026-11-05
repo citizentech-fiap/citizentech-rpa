@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0060",
+  "data_envio": "2026-11-01T17:19:00-03:00",
+  "nome": "Ciclano da Silva Fictício",
+  "email": "ciclano.ficticio43@exemplo.com",
+  "texto": "Perdi meu emprego e quero começar a trabalhar por conta própria, peço o seguro ou abro um MEI?",
+  "anexos": [
+    "anexos/REQ-0060_trct.png",
+    "anexos/REQ-0060_cpf.png"
+  ]
+}

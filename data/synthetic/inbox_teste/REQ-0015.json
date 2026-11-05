@@ -1,0 +1,13 @@
+{
+  "request_id": "REQ-0015",
+  "data_envio": "2026-11-03T16:16:00-03:00",
+  "nome": "Luzia Imaginária Ferreira",
+  "email": "luzia.ficticio12@exemplo.com",
+  "cpf": "191.676.677-62",
+  "texto": "Gostaria de solicitar o Benefício de Prestação Continuada para pessoa com deficiência. Seguem documentos.",
+  "anexos": [
+    "anexos/REQ-0015_rg.png",
+    "anexos/REQ-0015_cpf.png",
+    "anexos/REQ-0015_titulo.png"
+  ]
+}

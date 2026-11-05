@@ -1,0 +1,12 @@
+{
+  "request_id": "REQ-0022",
+  "data_envio": "2026-11-02T21:25:00-03:00",
+  "nome": "Luzia Imaginária Ferreira",
+  "email": "luzia.ficticio88@exemplo.com",
+  "cpf": "498.791.527-06",
+  "texto": "Fui demitido e já tenho 65 anos, não sei se peço o seguro-desemprego ou já dou entrada na aposentadoria.",
+  "anexos": [
+    "anexos/REQ-0022_trct.png",
+    "anexos/REQ-0022_cpf.png"
+  ]
+}

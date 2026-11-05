@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0030",
+  "data_envio": "2026-11-01T10:29:00-03:00",
+  "nome": "Tereza Ficção Martins",
+  "email": "tereza.ficticio37@exemplo.com",
+  "cpf": "373.775.458-10",
+  "texto": "Gostaria de saber como emitir a guia do IPTU deste ano, o carnê não chegou em casa.",
+  "anexos": [
+    "anexos/REQ-0030_residencia.png"
+  ]
+}

@@ -1,0 +1,61 @@
+request_id,service_id,docs_presentes,docs_ilegiveis,resultado_esperado,categoria,observacao
+REQ-0001,antecedentes_criminais,cpf;documento_identidade;carteira_trabalho,,resolvido,tipico,
+REQ-0002,cpf,certidao_civil;carteira_trabalho,,resolvido,docs_faltando,
+REQ-0003,carteira_trabalho_digital,,,invalido,invalido,anexo aponta para fora da inbox (inexistente)
+REQ-0004,cpf,documento_identidade,certidao_civil,revisao_humana,ilegivel,anexo certidao degradado (contraste)
+REQ-0005,seguro_desemprego,cpf;termo_rescisao,,resolvido,tipico,
+REQ-0006,passaporte,documento_identidade;titulo_eleitor;certidao_civil;cpf,,resolvido,tipico,
+REQ-0007,titulo_eleitor,,,invalido,invalido,anexos citados não existem no disco
+REQ-0008,cadunico,documento_identidade;carteira_trabalho;comprovante_residencia,,resolvido,docs_faltando,
+REQ-0009,fora_escopo,,,revisao_humana,fora_escopo,
+REQ-0010,passaporte,certidao_civil;titulo_eleitor;cpf;documento_identidade,,revisao_humana,ambiguo,alternativa=titulo_eleitor
+REQ-0011,bpc,cpf;documento_identidade;termo_rescisao,,resolvido,tipico,
+REQ-0012,antecedentes_criminais,documento_identidade,,resolvido,docs_faltando,
+REQ-0013,seguro_desemprego,cpf,,resolvido,docs_faltando,
+REQ-0014,cpf,documento_identidade;certidao_civil,,resolvido,tipico,
+REQ-0015,bpc,documento_identidade;cpf;titulo_eleitor,,resolvido,tipico,
+REQ-0016,aposentadoria_idade,,,invalido,invalido,campo texto vazio
+REQ-0017,bpc,documento_identidade;cpf,,revisao_humana,ambiguo,alternativa=cadunico
+REQ-0018,mei,cpf;documento_identidade,,revisao_humana,ambiguo,alternativa=cpf
+REQ-0019,mei,cpf,,resolvido,docs_faltando,
+REQ-0020,seguro_desemprego,termo_rescisao,cpf,revisao_humana,ilegivel,anexo cpf degradado (desfoque)
+REQ-0021,fora_escopo,,,revisao_humana,fora_escopo,
+REQ-0022,seguro_desemprego,termo_rescisao;cpf,,revisao_humana,ambiguo,alternativa=aposentadoria_idade
+REQ-0023,bpc,cpf;documento_identidade,,resolvido,tipico,
+REQ-0024,titulo_eleitor,comprovante_residencia;documento_identidade,,resolvido,tipico,
+REQ-0025,passaporte,certidao_civil;comprovante_residencia;titulo_eleitor;cpf;documento_identidade,,resolvido,tipico,
+REQ-0026,fora_escopo,documento_identidade,,revisao_humana,fora_escopo,
+REQ-0027,antecedentes_criminais,,,invalido,invalido,campo texto ausente
+REQ-0028,cadunico,comprovante_residencia;cpf;documento_identidade,,resolvido,tipico,
+REQ-0029,mei,cpf;documento_identidade,,resolvido,tipico,
+REQ-0030,fora_escopo,comprovante_residencia,,revisao_humana,fora_escopo,
+REQ-0031,passaporte,comprovante_renda;documento_identidade;cpf;titulo_eleitor,,resolvido,docs_faltando,
+REQ-0032,mei,cpf;documento_identidade,,resolvido,tipico,
+REQ-0033,bpc,documento_identidade,,resolvido,docs_faltando,
+REQ-0034,antecedentes_criminais,documento_identidade;cpf;carteira_trabalho,,resolvido,tipico,
+REQ-0035,cadunico,documento_identidade;cpf;comprovante_residencia,,resolvido,tipico,
+REQ-0036,seguro_desemprego,cpf;documento_identidade;termo_rescisao,,resolvido,tipico,
+REQ-0037,carteira_trabalho_digital,cpf,,resolvido,tipico,
+REQ-0038,passaporte,certidao_civil;documento_identidade,,resolvido,docs_faltando,
+REQ-0039,seguro_desemprego,cpf;comprovante_residencia;termo_rescisao,,resolvido,tipico,
+REQ-0040,cpf,certidao_civil;termo_rescisao;documento_identidade,,resolvido,tipico,
+REQ-0041,fora_escopo,,,revisao_humana,fora_escopo,
+REQ-0042,aposentadoria_idade,documento_identidade;cpf,,resolvido,tipico,
+REQ-0043,bpc,documento_identidade,cpf,revisao_humana,ilegivel,anexo cpf degradado (rotacao)
+REQ-0044,mei,cpf;documento_identidade,,resolvido,tipico,
+REQ-0045,carteira_trabalho_digital,cpf,,revisao_humana,ambiguo,alternativa=antecedentes_criminais
+REQ-0046,passaporte,titulo_eleitor;documento_identidade;certidao_civil,cpf,revisao_humana,ilegivel,anexo cpf degradado (ruido)
+REQ-0047,carteira_trabalho_digital,documento_identidade,,resolvido,docs_faltando,
+REQ-0048,cadunico,,,invalido,invalido,JSON truncado (malformado)
+REQ-0049,titulo_eleitor,documento_identidade,,resolvido,docs_faltando,
+REQ-0050,seguro_desemprego,termo_rescisao,,resolvido,docs_faltando,
+REQ-0051,fora_escopo,,,revisao_humana,fora_escopo,
+REQ-0052,aposentadoria_idade,cpf;carteira_trabalho,,resolvido,docs_faltando,
+REQ-0053,aposentadoria_idade,documento_identidade;cpf,,resolvido,tipico,
+REQ-0054,titulo_eleitor,comprovante_residencia;documento_identidade,,resolvido,tipico,
+REQ-0055,carteira_trabalho_digital,cpf,,resolvido,tipico,
+REQ-0056,mei,,,invalido,invalido,JSON com aspas simples e vírgula sobrando (malformado)
+REQ-0057,cadunico,comprovante_residencia;cpf;documento_identidade,,resolvido,tipico,
+REQ-0058,aposentadoria_idade,comprovante_renda;cpf;documento_identidade,,resolvido,tipico,
+REQ-0059,titulo_eleitor,comprovante_residencia,documento_identidade,revisao_humana,ilegivel,anexo rg degradado (pixelado)
+REQ-0060,seguro_desemprego,termo_rescisao;cpf,,revisao_humana,ambiguo,alternativa=mei

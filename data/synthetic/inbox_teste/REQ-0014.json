@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0014",
+  "data_envio": "2026-11-01T16:12:00-03:00",
+  "nome": "Severino de Tal Ribeiro",
+  "email": "severino.ficticio48@exemplo.com",
+  "texto": "Fui no banco abrir conta e disseram que meu cadastro na Receita está suspenso. Como regularizo?",
+  "anexos": [
+    "anexos/REQ-0014_rg.png",
+    "anexos/REQ-0014_certidao.png"
+  ]
+}

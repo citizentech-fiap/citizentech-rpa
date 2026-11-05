@@ -1,0 +1,14 @@
+{
+  "request_id": "REQ-0006",
+  "data_envio": "2026-11-01T19:00:00-03:00",
+  "nome": "Pedro Simulado Costa",
+  "email": "pedro.ficticio40@exemplo.com",
+  "cpf": "776.712.828-50",
+  "texto": "Olá, vou visitar minha irmã no Canadá em julho e nunca tive passaporte. Como faço para emitir o meu?",
+  "anexos": [
+    "anexos/REQ-0006_rg.pdf",
+    "anexos/REQ-0006_titulo.png",
+    "anexos/REQ-0006_certidao.pdf",
+    "anexos/REQ-0006_cpf.png"
+  ]
+}

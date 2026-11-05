@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0038",
+  "data_envio": "2026-11-02T10:19:00-03:00",
+  "nome": "Luzia Imaginária Ferreira",
+  "email": "luzia.ficticio96@exemplo.com",
+  "texto": "Boa noite, fui roubado e levaram meu passaporte. Preciso tirar um novo antes da viagem de dezembro.",
+  "anexos": [
+    "anexos/REQ-0038_certidao.png",
+    "anexos/REQ-0038_rg.png"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "request_id": "REQ-0039",
+  "data_envio": "2026-11-01T15:03:00-03:00",
+  "nome": "João Teste Pereira",
+  "email": "joao.ficticio90@exemplo.com",
+  "cpf": "866.866.149-79",
+  "texto": "Boa tarde. Trabalhei 3 anos numa padaria e semana passada o dono fechou as portas e dispensou todo mundo. Recebi o acerto. Queria saber como faço para receber as parcelas do auxílio para quem ficou sem trabalho.",
+  "anexos": [
+    "anexos/REQ-0039_cpf.png",
+    "anexos/REQ-0039_residencia.png",
+    "anexos/REQ-0039_trct.png"
+  ]
+}

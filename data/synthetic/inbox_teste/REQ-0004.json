@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0004",
+  "data_envio": "2026-11-02T16:12:00-03:00",
+  "nome": "Raimundo Exemplar Gomes",
+  "email": "raimundo.ficticio22@exemplo.com",
+  "texto": "Casei e mudei de sobrenome, preciso atualizar os dados no CPF. Segue certidão.",
+  "anexos": [
+    "anexos/REQ-0004_certidao.png",
+    "anexos/REQ-0004_rg.png"
+  ]
+}

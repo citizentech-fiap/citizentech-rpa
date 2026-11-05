@@ -1,0 +1,10 @@
+{
+  "request_id": "REQ-0003",
+  "data_envio": "2026-11-04T10:34:00-03:00",
+  "nome": "Ana Modelo Oliveira",
+  "email": "ana.ficticio83@exemplo.com",
+  "texto": "Minha carteira de trabalho de papel rasgou toda. Agora tem a versão no celular? Como ativo?",
+  "anexos": [
+    "../../segredos/cpf.png"
+  ]
+}

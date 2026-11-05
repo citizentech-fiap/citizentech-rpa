@@ -1,0 +1,10 @@
+{
+  "request_id": "REQ-0037",
+  "data_envio": "2026-11-02T17:17:00-03:00",
+  "nome": "Antônio Inventado Alves",
+  "email": "antonio.ficticio88@exemplo.com",
+  "texto": "Fui aprovado num processo seletivo e o RH pediu o número da minha carteira de trabalho, mas eu nunca tirei. Como consigo a digital?",
+  "anexos": [
+    "anexos/REQ-0037_cpf.png"
+  ]
+}

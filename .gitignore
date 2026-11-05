@@ -1,0 +1,16 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+logs/
+inbox/
+processed/
+failed/
+outbox/
+output/controle.xlsx
+output/relatorios/
+models/
+
+# ferramentas locais
+.claude/
+.pytest_cache/

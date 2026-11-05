@@ -1,0 +1,12 @@
+{
+  "request_id": "REQ-0018",
+  "data_envio": "2026-11-01T07:11:00-03:00",
+  "nome": "Joana Hipotética Rocha",
+  "email": "joana.ficticio12@exemplo.com",
+  "cpf": "651.587.935-76",
+  "texto": "Quero abrir um MEI mas meu CPF está suspenso, o que faço primeiro?",
+  "anexos": [
+    "anexos/REQ-0018_cpf.png",
+    "anexos/REQ-0018_rg.png"
+  ]
+}

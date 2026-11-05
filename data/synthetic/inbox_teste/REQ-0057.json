@@ -1,0 +1,13 @@
+{
+  "request_id": "REQ-0057",
+  "data_envio": "2026-11-04T11:29:00-03:00",
+  "nome": "Maria Exemplo dos Santos",
+  "email": "maria.ficticio37@exemplo.com",
+  "cpf": "365.765.887-97",
+  "texto": "Gostaria de incluir minha família no CadÚnico, estamos sem renda fixa desde o começo do ano.",
+  "anexos": [
+    "anexos/REQ-0057_residencia.pdf",
+    "anexos/REQ-0057_cpf.png",
+    "anexos/REQ-0057_rg.png"
+  ]
+}

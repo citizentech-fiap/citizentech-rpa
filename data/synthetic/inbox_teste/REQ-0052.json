@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0052",
+  "data_envio": "2026-11-01T08:35:00-03:00",
+  "nome": "Raimundo Exemplar Gomes",
+  "email": "raimundo.ficticio40@exemplo.com",
+  "texto": "quero parar de trabalhar, ja tenho idade pra aposentar? como dou entrada no inss?",
+  "anexos": [
+    "anexos/REQ-0052_cpf.png",
+    "anexos/REQ-0052_ctps.png"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0045",
+  "data_envio": "2026-11-04T16:31:00-03:00",
+  "nome": "Raimundo Exemplar Gomes",
+  "email": "raimundo.ficticio47@exemplo.com",
+  "cpf": "979.941.208-86",
+  "texto": "Preciso da carteira de trabalho e também de certidão de antecedentes para a nova vaga, por onde começo?",
+  "anexos": [
+    "anexos/REQ-0045_cpf.png"
+  ]
+}

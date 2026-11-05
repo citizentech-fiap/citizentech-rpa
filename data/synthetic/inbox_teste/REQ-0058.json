@@ -1,0 +1,12 @@
+{
+  "request_id": "REQ-0058",
+  "data_envio": "2026-11-01T12:09:00-03:00",
+  "nome": "Francisca Amostra Lima",
+  "email": "francisca.ficticio19@exemplo.com",
+  "texto": "Completei 65 anos mês passado e tenho 18 anos de contribuição. Como faço para me aposentar?",
+  "anexos": [
+    "anexos/REQ-0058_renda.png",
+    "anexos/REQ-0058_cpf.png",
+    "anexos/REQ-0058_rg.png"
+  ]
+}

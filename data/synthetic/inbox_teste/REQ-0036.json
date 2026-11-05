@@ -1,0 +1,13 @@
+{
+  "request_id": "REQ-0036",
+  "data_envio": "2026-11-04T09:36:00-03:00",
+  "nome": "Francisca Amostra Lima",
+  "email": "francisca.ficticio30@exemplo.com",
+  "cpf": "264.121.171-30",
+  "texto": "fui dispensado da metalurgica dia 20, ja tenho o TRCT em maos. o que preciso mandar pra liberar o seguro?",
+  "anexos": [
+    "anexos/REQ-0036_cpf.png",
+    "anexos/REQ-0036_rg.png",
+    "anexos/REQ-0036_trct.png"
+  ]
+}

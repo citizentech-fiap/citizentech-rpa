@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0013",
+  "data_envio": "2026-11-04T12:21:00-03:00",
+  "nome": "José Fictício Souza",
+  "email": "jose.ficticio66@exemplo.com",
+  "cpf": "518.786.305-79",
+  "texto": "Olá, é a primeira vez que fico desempregada. Como funciona o pedido do benefício do desemprego? Telefone (11) 90000-1234.",
+  "anexos": [
+    "anexos/REQ-0013_cpf.png"
+  ]
+}

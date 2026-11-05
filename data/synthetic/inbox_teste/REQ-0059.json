@@ -1,0 +1,12 @@
+{
+  "request_id": "REQ-0059",
+  "data_envio": "2026-11-04T12:53:00-03:00",
+  "nome": "Pedro Simulado Costa",
+  "email": "pedro.ficticio95@exemplo.com",
+  "cpf": "249.479.672-80",
+  "texto": "Olá, preciso de quitação eleitoral para tomar posse, mas nunca fiz o alistamento. Como emito o título?",
+  "anexos": [
+    "anexos/REQ-0059_rg.png",
+    "anexos/REQ-0059_residencia.png"
+  ]
+}

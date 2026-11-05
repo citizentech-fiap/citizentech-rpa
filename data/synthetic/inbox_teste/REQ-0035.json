@@ -1,0 +1,12 @@
+{
+  "request_id": "REQ-0035",
+  "data_envio": "2026-11-03T11:43:00-03:00",
+  "nome": "Ana Modelo Oliveira",
+  "email": "ana.ficticio83@exemplo.com",
+  "texto": "Bom dia, a moça do CRAS falou que eu tenho que me registrar no cadastro do governo pra conseguir o Bolsa Família. Como faço?",
+  "anexos": [
+    "anexos/REQ-0035_rg.pdf",
+    "anexos/REQ-0035_cpf.png",
+    "anexos/REQ-0035_residencia.png"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+ "service_id": "aposentadoria_idade",
+ "url": "https://www.gov.br/pt-br/servicos/solicitar-aposentadoria-por-idade-trabalhador-urbano",
+ "formato": "api",
+ "api_id": "47",
+ "data_coleta": "2026-11-05T13:14:56-03:00"
+}

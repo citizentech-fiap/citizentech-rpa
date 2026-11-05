@@ -1,0 +1,14 @@
+{
+  "request_id": "REQ-0010",
+  "data_envio": "2026-11-01T08:46:00-03:00",
+  "nome": "Raimundo Exemplar Gomes",
+  "email": "raimundo.ficticio48@exemplo.com",
+  "cpf": "432.780.775-19",
+  "texto": "Vou viajar pro exterior e meu título de eleitor está cancelado, isso atrapalha? O que preciso regularizar?",
+  "anexos": [
+    "anexos/REQ-0010_certidao.png",
+    "anexos/REQ-0010_titulo.png",
+    "anexos/REQ-0010_cpf.png",
+    "anexos/REQ-0010_rg.png"
+  ]
+}

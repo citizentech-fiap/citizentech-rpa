@@ -1,0 +1,12 @@
+{
+  "request_id": "REQ-0034",
+  "data_envio": "2026-11-01T08:13:00-03:00",
+  "nome": "Fulano de Tal",
+  "email": "fulano.ficticio64@exemplo.com",
+  "texto": "Bom dia. Estou me cadastrando como motorista de aplicativo e pediram certidão de antecedentes da Polícia Federal. Como emito?",
+  "anexos": [
+    "anexos/REQ-0034_rg.png",
+    "anexos/REQ-0034_cpf.png",
+    "anexos/REQ-0034_ctps.png"
+  ]
+}

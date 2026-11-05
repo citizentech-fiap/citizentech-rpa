@@ -1,0 +1,12 @@
+{
+  "request_id": "REQ-0043",
+  "data_envio": "2026-11-04T17:07:00-03:00",
+  "nome": "Clara Protótipo Nunes",
+  "email": "clara.ficticio59@exemplo.com",
+  "cpf": "793.285.645-86",
+  "texto": "Como dou entrada no BPC idoso pra minha mãe de 72 anos?",
+  "anexos": [
+    "anexos/REQ-0043_cpf.png",
+    "anexos/REQ-0043_rg.png"
+  ]
+}

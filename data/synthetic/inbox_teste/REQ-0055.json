@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0055",
+  "data_envio": "2026-11-01T11:03:00-03:00",
+  "nome": "Ana Modelo Oliveira",
+  "email": "ana.ficticio40@exemplo.com",
+  "cpf": "295.631.246-72",
+  "texto": "nao acho minha ctps no aplicativo, como faço pra habilitar a carteira digital?",
+  "anexos": [
+    "anexos/REQ-0055_cpf.png"
+  ]
+}

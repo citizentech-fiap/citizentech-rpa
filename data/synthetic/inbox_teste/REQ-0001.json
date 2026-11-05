@@ -1,0 +1,13 @@
+{
+  "request_id": "REQ-0001",
+  "data_envio": "2026-11-01T16:06:00-03:00",
+  "nome": "Clara Protótipo Nunes",
+  "email": "clara.ficticio47@exemplo.com",
+  "cpf": "759.983.143-70",
+  "texto": "preciso de um documento que prove que eu nao tenho passagem pela policia, pra entregar na empresa",
+  "anexos": [
+    "anexos/REQ-0001_cpf.png",
+    "anexos/REQ-0001_rg.png",
+    "anexos/REQ-0001_ctps.png"
+  ]
+}

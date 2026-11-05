@@ -1,0 +1,12 @@
+{
+  "request_id": "REQ-0044",
+  "data_envio": "2026-11-02T19:56:00-03:00",
+  "nome": "Maria Exemplo dos Santos",
+  "email": "maria.ficticio56@exemplo.com",
+  "cpf": "912.500.474-19",
+  "texto": "Olá, gostaria de me registrar como microempreendedor individual. Seguem documentos.",
+  "anexos": [
+    "anexos/REQ-0044_cpf.png",
+    "anexos/REQ-0044_rg.png"
+  ]
+}

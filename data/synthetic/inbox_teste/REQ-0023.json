@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0023",
+  "data_envio": "2026-11-02T20:41:00-03:00",
+  "nome": "Luzia Imaginária Ferreira",
+  "email": "luzia.ficticio44@exemplo.com",
+  "texto": "Meu filho tem paralisia cerebral e eu não trabalho para cuidar dele. Ouvi falar de um benefício de um salário mínimo, como peço?",
+  "anexos": [
+    "anexos/REQ-0023_cpf.png",
+    "anexos/REQ-0023_rg.png"
+  ]
+}

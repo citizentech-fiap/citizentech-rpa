@@ -1,0 +1,10 @@
+{
+  "request_id": "REQ-0049",
+  "data_envio": "2026-11-04T12:35:00-03:00",
+  "nome": "Maria Exemplo dos Santos",
+  "email": "maria.ficticio46@exemplo.com",
+  "texto": "faltei em 3 eleições seguidas e acho q meu título foi cancelado, como regularizo?",
+  "anexos": [
+    "anexos/REQ-0049_rg.png"
+  ]
+}

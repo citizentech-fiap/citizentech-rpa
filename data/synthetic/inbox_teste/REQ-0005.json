@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0005",
+  "data_envio": "2026-11-01T10:26:00-03:00",
+  "nome": "Antônio Inventado Alves",
+  "email": "antonio.ficticio78@exemplo.com",
+  "texto": "Prezados, após minha demissão sem justa causa gostaria de requerer o seguro-desemprego. Segue documentação em anexo. Meu CPF é 000.111.222-30.",
+  "anexos": [
+    "anexos/REQ-0005_cpf.png",
+    "anexos/REQ-0005_trct.png"
+  ]
+}

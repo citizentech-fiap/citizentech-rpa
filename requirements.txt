@@ -1,0 +1,15 @@
+pyyaml
+python-dotenv
+requests
+beautifulsoup4
+lxml
+scikit-learn
+joblib
+pandas
+openpyxl
+pillow
+pdfplumber
+rapidocr-onnxruntime
+streamlit
+google-genai
+tabulate

@@ -1,0 +1,11 @@
+{
+  "request_id": "REQ-0047",
+  "data_envio": "2026-11-01T12:30:00-03:00",
+  "nome": "Raimundo Exemplar Gomes",
+  "email": "raimundo.ficticio34@exemplo.com",
+  "cpf": "639.712.620-37",
+  "texto": "Olá, gostaria de obter a Carteira de Trabalho Digital. Anexo meu CPF.",
+  "anexos": [
+    "anexos/REQ-0047_rg.png"
+  ]
+}

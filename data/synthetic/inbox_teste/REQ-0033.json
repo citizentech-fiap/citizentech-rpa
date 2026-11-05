@@ -1,0 +1,10 @@
+{
+  "request_id": "REQ-0033",
+  "data_envio": "2026-11-01T15:26:00-03:00",
+  "nome": "Severino de Tal Ribeiro",
+  "email": "severino.ficticio94@exemplo.com",
+  "texto": "Sou deficiente visual e estou desempregado há anos, queria saber do benefício assistencial do INSS.",
+  "anexos": [
+    "anexos/REQ-0033_rg.png"
+  ]
+}
