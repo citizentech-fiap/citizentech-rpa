@@ -38,67 +38,62 @@ responder:
 email:
   send: false                # false = só gera .eml em outbox/ (rascunho)
 
-# Catálogo de serviços. documentos_exigidos usa os tipos canônicos de `document_types`.
-# A lista foi montada a partir das Cartas de Serviço do gov.br e é conferida pelo coletor.
+# Catálogo de serviços do agricultor familiar do semiárido afetado pela seca.
+# documentos_exigidos usa os tipos canônicos de `document_types`, conferidos nas Cartas de Serviço do gov.br.
 services:
-  - id: seguro_desemprego
-    nome: Solicitar o Seguro-Desemprego
-    orgao: Ministério do Trabalho e Emprego
-    url: https://www.gov.br/pt-br/servicos/solicitar-o-seguro-desemprego
-    documentos_exigidos: [cpf, termo_rescisao]
+  - id: garantia_safra
+    nome: Acessar o Benefício Garantia-Safra
+    orgao: Ministério do Desenvolvimento Agrário e Agricultura Familiar
+    url: https://www.gov.br/pt-br/servicos/acessar-o-beneficio-garantia-safra
+    documentos_exigidos: [documento_identidade, cpf, caf]
+  - id: caf
+    nome: Inscrever-se no Cadastro Nacional da Agricultura Familiar (CAF)
+    orgao: Ministério do Desenvolvimento Agrário e Agricultura Familiar
+    url: https://www.gov.br/pt-br/servicos/cadastrar-se-no-caf-cadastro-nacional-da-agricultura-familiar
+    documentos_exigidos: [cpf, comprovante_posse_terra, comprovante_renda]
+  - id: pronaf
+    nome: Acessar o crédito do Pronaf
+    orgao: Ministério do Desenvolvimento Agrário e Agricultura Familiar
+    url: https://www.gov.br/pt-br/servicos/acessar-o-programa-nacional-de-fortalecimento-da-agricultura-familiar-pronaf
+    documentos_exigidos: [documento_identidade, cpf, caf, comprovante_posse_terra]
+  - id: aposentadoria_rural
+    nome: Solicitar aposentadoria por idade rural
+    orgao: INSS
+    url: https://www.gov.br/pt-br/servicos/solicitar-aposentadoria-por-idade-para-trabalhador-rural
+    documentos_exigidos: [documento_identidade, cpf]
+  - id: salario_maternidade_rural
+    nome: Solicitar salário-maternidade rural
+    orgao: INSS
+    url: https://www.gov.br/pt-br/servicos/solicitar-salario-maternidade-rural
+    # A carta exige identificação e CPF; certidão/termo de guarda só nos casos de adoção ou guarda.
+    documentos_exigidos: [documento_identidade, cpf]
   - id: cadunico
     nome: Inscrever-se no Cadastro Único
     orgao: Ministério do Desenvolvimento e Assistência Social
     url: https://www.gov.br/pt-br/servicos/inscrever-se-no-cadastro-unico-para-programas-sociais-do-governo-federal
     documentos_exigidos: [documento_identidade, cpf, comprovante_residencia]
-  - id: passaporte
-    nome: Obter passaporte comum
-    orgao: Polícia Federal
-    url: https://www.gov.br/pt-br/servicos/obter-passaporte-comum-para-brasileiro
-    documentos_exigidos: [documento_identidade, cpf, titulo_eleitor, certidao_civil]
-  - id: carteira_trabalho_digital
-    nome: Obter a Carteira de Trabalho Digital
-    orgao: Ministério do Trabalho e Emprego
-    url: https://www.gov.br/pt-br/servicos/obter-a-carteira-de-trabalho
-    documentos_exigidos: [cpf]
-  - id: antecedentes_criminais
-    nome: Emitir certidão de antecedentes criminais
-    orgao: Polícia Federal
-    url: https://www.gov.br/pt-br/servicos/emitir-certidao-de-antecedentes-criminais
-    documentos_exigidos: [documento_identidade, cpf]
-  - id: mei
-    nome: Formalizar-se como Microempreendedor Individual (MEI)
-    orgao: Ministério do Empreendedorismo
-    url: https://www.gov.br/pt-br/servicos/realizar-registro-como-microempreendedor-individual-mei
+  - id: bolsa_familia
+    nome: Receber o Bolsa Família
+    orgao: Ministério do Desenvolvimento e Assistência Social
+    url: https://www.gov.br/pt-br/servicos/receber-o-bolsa-familia
+    # A carta remete aos documentos do Cadastro Único.
+    documentos_exigidos: [documento_identidade, cpf, comprovante_residencia]
+  - id: bpc
+    nome: Solicitar o Benefício de Prestação Continuada (BPC)
+    orgao: INSS
+    url: https://www.gov.br/pt-br/servicos/solicitar-beneficio-assistencial-a-pessoa-com-deficiencia
     documentos_exigidos: [documento_identidade, cpf]
   - id: cpf
     nome: Inscrever ou regularizar o CPF
     orgao: Receita Federal
     url: https://www.gov.br/pt-br/servicos/inscrever-no-cpf
     documentos_exigidos: [documento_identidade, certidao_civil]
-  - id: bpc
-    nome: Solicitar o Benefício de Prestação Continuada (BPC)
-    orgao: INSS
-    url: https://www.gov.br/pt-br/servicos/solicitar-beneficio-assistencial-a-pessoa-com-deficiencia
-    documentos_exigidos: [documento_identidade, cpf]
-  - id: aposentadoria_idade
-    nome: Solicitar aposentadoria por idade
-    orgao: INSS
-    url: https://www.gov.br/pt-br/servicos/solicitar-aposentadoria-por-idade-trabalhador-urbano
-    documentos_exigidos: [documento_identidade, cpf]
-  - id: titulo_eleitor
-    nome: Emitir o título de eleitor
-    # Não há carta federal do TSE no gov.br; usamos a carta do TRE-MT no catálogo estadual do gov.br.
-    orgao: Justiça Eleitoral (carta do TRE-MT no catálogo gov.br)
-    url: https://www.gov.br/pt-br/servicos-estaduais/servico_estadual?id=20316
-    documentos_exigidos: [documento_identidade, comprovante_residencia]
 
 document_types:
-  documento_identidade: "Documento de identidade com foto (RG, CNH ou equivalente)"
+  documento_identidade: "Documento de identidade com foto (RG, CIN ou CNH)"
   cpf: "CPF"
   comprovante_residencia: "Comprovante de residência"
-  carteira_trabalho: "Carteira de Trabalho"
-  termo_rescisao: "Termo de Rescisão do Contrato de Trabalho (TRCT)"
-  titulo_eleitor: "Título de eleitor"
   certidao_civil: "Certidão de nascimento ou casamento"
   comprovante_renda: "Comprovante de renda"
+  caf: "Comprovante de inscrição no CAF (RICAF/extrato)"
+  comprovante_posse_terra: "Comprovante de posse ou propriedade da terra (escritura, contrato de arrendamento ou declaração do sindicato)"

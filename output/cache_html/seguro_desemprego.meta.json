@@ -1,7 +1,0 @@
-{
- "service_id": "seguro_desemprego",
- "url": "https://www.gov.br/pt-br/servicos/solicitar-o-seguro-desemprego",
- "formato": "api",
- "api_id": "1045",
- "data_coleta": "2026-11-05T13:14:33-03:00"
-}

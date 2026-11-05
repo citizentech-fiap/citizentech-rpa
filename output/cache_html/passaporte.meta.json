@@ -1,7 +1,0 @@
-{
- "service_id": "passaporte",
- "url": "https://www.gov.br/pt-br/servicos/obter-passaporte-comum-para-brasileiro",
- "formato": "api",
- "api_id": "62",
- "data_coleta": "2026-11-05T13:14:40-03:00"
-}
