@@ -32,16 +32,13 @@ def _get_rag() -> Any:
     global _RAG, _RAG_ERROR
     if _RAG is not None or _RAG_ERROR is not None:
         return _RAG
-    try:
-        genai_dir = path("genai_path")
-        if str(genai_dir) not in sys.path:
-            sys.path.insert(0, str(genai_dir))
-        from citizen_rag.rag import RAGAssistant  # type: ignore
-        _RAG = RAGAssistant(corpus_path=path("corpus"))
-        log.info("Assistente RAG carregado de %s", genai_dir)
-    except Exception as exc:  # caminho seguro: segue com template
-        _RAG_ERROR = f"{type(exc).__name__}: {exc}"
-        log.warning("RAG indisponível, usando template: %s", _RAG_ERROR)
+    from .integracao import criar_rag
+    _RAG, origem = criar_rag()
+    if _RAG is None:  # caminho seguro: segue com template
+        _RAG_ERROR = origem
+        log.warning("RAG indisponível, usando template: %s", origem)
+    else:
+        log.info("Assistente RAG carregado (%s)", origem)
     return _RAG
 
 

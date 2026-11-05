@@ -1,0 +1,6 @@
+# Opcional: liga o robô ao assistente RAG (repositório citizentech-genai).
+# Sem isto o robô funciona normalmente e responde por template.
+# Com o repositório genAI clonado ao lado deste (pasta ../genAI):
+-e ../genAI
+# Ou direto do GitHub (substitua <usuario-ou-org>):
+# citizentech-genai @ git+https://github.com/<usuario-ou-org>/citizentech-genai@v1.0

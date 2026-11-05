@@ -24,12 +24,9 @@ st.set_page_config(page_title="CitizenTech", page_icon="🏛️", layout="wide")
 
 @st.cache_resource(show_spinner="Carregando o assistente…")
 def get_rag():
-    try:
-        sys.path.insert(0, str(path("genai_path")))
-        from citizen_rag.rag import RAGAssistant  # type: ignore
-        return RAGAssistant(corpus_path=path("corpus")), None
-    except Exception as exc:
-        return None, f"{type(exc).__name__}: {exc}"
+    from robo.integracao import criar_rag
+    rag, origem = criar_rag()
+    return (rag, None) if rag is not None else (None, origem)
 
 
 def pagina_enviar():

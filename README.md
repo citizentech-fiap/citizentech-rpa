@@ -30,6 +30,16 @@ inbox/*.json ─► 2. validação ─► 3. máscara de dados pessoais ─► 4
             ─► 7. e-mail .eml + controle.xlsx + relatório ─► processed/ | failed/ | revisão humana
 ```
 
+### Parte da solução CitizenTech
+| Repositório | Disciplina | Papel |
+|---|---|---|
+| **`citizentech-rpa`** (este) | AI for RPA | coleta das Cartas de Serviço e pré-triagem dos pedidos |
+| `citizentech-genai` | Generative AI | assistente RAG que redige as respostas (etapa 6) e responde no chat |
+| `citizentech-dashboard` | Front-end | painel de decisão do gestor |
+
+O corpus coletado aqui (`output/corpus/servicos.jsonl`) é a base de conhecimento do assistente; o formato
+está em [CONTRACTS.md](CONTRACTS.md).
+
 Temas da disciplina e onde cada um entra: [docs/quadro_temas.md](docs/quadro_temas.md).
 Proteção de dados, ética e ODS: [docs/etica_ods.md](docs/etica_ods.md).
 Evidências de validação: [docs/evidencias.md](docs/evidencias.md).
@@ -43,8 +53,9 @@ Requisitos: Python 3.11+ (testado no 3.14, Windows 11). Não precisa instalar na
 python -m venv .venv
 .venv\Scripts\activate            # Linux/Mac: source .venv/bin/activate
 pip install -r requirements.txt
-pip install -r ../genAI/requirements.txt   # assistente RAG (opcional: sem ele, o robô responde por template)
+pip install -r requirements-integracao.txt   # opcional: assistente RAG (repositório citizentech-genai clonado em ../genAI)
 ```
+Sem o assistente instalado o robô funciona do mesmo jeito e responde por template.
 
 Gerar os dados sintéticos e rodar o robô no conjunto de teste:
 
