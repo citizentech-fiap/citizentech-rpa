@@ -16,7 +16,7 @@ Repositório `citizentech-rpa` — robô de pré-triagem de pedidos de agriculto
 - Falhas previsíveis nunca derrubam a execução: registre no log e siga por um caminho seguro.
 - Dados: apenas sintéticos ou públicos. Nenhum dado pessoal real; documentos fictícios trazem
   "DOCUMENTO FICTÍCIO - USO ACADÊMICO". CPFs sintéticos com dígito verificador inválido.
-- Nunca leia, grave ou exiba o conteúdo de `.env`; chaves ficam fora do código.
+- O agente nunca lê, grava ou exibe o conteúdo de `.env`. O **código da aplicação** carrega a chave do ambiente/`.env` normalmente (python-dotenv) — não desative isso; chaves ficam fora do código e do git.
 
 ## Antes de terminar
 - Rode os testes: `..\.venv\Scripts\python -m unittest discover -s tests -q` (todos devem passar).
