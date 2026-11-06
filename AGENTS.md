@@ -18,6 +18,8 @@ Repositório `citizentech-rpa` — robô de pré-triagem de pedidos de agriculto
   "DOCUMENTO FICTÍCIO - USO ACADÊMICO". CPFs sintéticos com dígito verificador inválido.
 - O agente nunca lê, grava ou exibe o conteúdo de `.env`. O **código da aplicação** carrega a chave do ambiente/`.env` normalmente (python-dotenv) — não desative isso; chaves ficam fora do código e do git.
 
+- Grave **todos** os arquivos em UTF-8. No PowerShell nunca use `Set-Content`/`Out-File` sem `-Encoding utf8` (o padrão é ANSI e troca acentos por "?"); prefira o editor/patch.
+
 ## Antes de terminar
 - Rode os testes: `..\.venv\Scripts\python -m unittest discover -s tests -q` (todos devem passar).
 - Mexa só nos arquivos que a tarefa pede. Não faça commit nem push: quem revisa e faz commit é o humano.
