@@ -452,6 +452,8 @@ def _identificador(html: str) -> str | None:
 # Cache bruto por serviço (output/cache_html/<service_id>.{html,json,meta.json})
 # --------------------------------------------------------------------------------------------
 def _escrever_atomico(destino: Path, conteudo: str) -> None:
+    if destino.exists() and destino.read_text(encoding="utf-8") == conteudo:
+        return
     destino.parent.mkdir(parents=True, exist_ok=True)
     tmp = destino.with_suffix(destino.suffix + ".tmp")
     tmp.write_text(conteudo, encoding="utf-8")
@@ -468,11 +470,23 @@ class _Cache:
 
     def salvar(self, sid: str, url: str, html: str, api_json: Any | None, formato: str,
                api_id: str | None, data_coleta: str) -> None:
+        anteriores = {ext: self._p(sid, ext).read_text(encoding="utf-8")
+                      for ext in ("html", "json") if self._p(sid, ext).exists()}
         _escrever_atomico(self._p(sid, "html"), html)
         if api_json is not None:
             _escrever_atomico(self._p(sid, "json"), json.dumps(api_json, ensure_ascii=False, indent=1))
         meta = {"service_id": sid, "url": url, "formato": formato, "api_id": api_id,
                 "data_coleta": data_coleta}
+        meta_path = self._p(sid, "meta.json")
+        if meta_path.exists():
+            try:
+                antiga = json.loads(meta_path.read_text(encoding="utf-8"))
+                iguais = anteriores.get("html") == html and (api_json is None or
+                    anteriores.get("json") == json.dumps(api_json, ensure_ascii=False, indent=1))
+                if iguais and all(antiga.get(k) == meta[k] for k in meta if k != "data_coleta"):
+                    meta["data_coleta"] = antiga["data_coleta"]
+            except (ValueError, KeyError):
+                pass
         _escrever_atomico(self._p(sid, "meta.json"), json.dumps(meta, ensure_ascii=False, indent=1))
 
     def carregar(self, sid: str) -> tuple[dict[str, Any], dict[str, Any]]:

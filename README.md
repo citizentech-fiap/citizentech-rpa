@@ -60,9 +60,16 @@ Requisitos: Python 3.11+ (testado no 3.14, Windows 11). Não precisa instalar na
 python -m venv .venv
 .venv\Scripts\activate            # Linux/Mac: source .venv/bin/activate
 pip install -r requirements.txt
+git clone https://github.com/citizentech-fiap/citizentech-genai.git ../genAI
 pip install -r requirements-integracao.txt   # opcional: assistente RAG (repositório citizentech-genai clonado em ../genAI)
 ```
 Sem o assistente instalado o robô funciona do mesmo jeito e responde por template.
+Também é possível instalar o clone com `pip install -e ../genAI`. Quando o RAG não carrega,
+há um aviso único no início, campos `rag_disponivel`/`motivo_rag` na aba `execucoes` e uma linha
+destacada no relatório. `--sem-genai` registra a escolha, sem aviso de falha.
+`responder.llm_timeout_s` limita a espera por `rag.answer` e é repassado para `llm.timeout_s`
+do genAI. Se expirar, usa template com `timeout_rag`. A thread em andamento não é interrompida;
+o encerramento do processo pode aguardar sua conclusão (incluindo retries internos do genAI).
 
 Gerar os dados sintéticos e rodar o robô no conjunto de teste:
 
@@ -88,6 +95,26 @@ Copie `.env.example` para `.env` e preencha `GEMINI_API_KEY` (gratuita em https:
 O `.env` está no `.gitignore` e nunca vai para o repositório. Sem a chave o robô funciona normalmente e
 responde por template; envio real de e-mail (SMTP) é opcional e desligado por padrão (`email.send: false`).
 
+### Demonstrar SMTP e fechar a revisão
+
+Para testar envio, abra um servidor SMTP local de testes (por exemplo, smtp4dev), escutando em
+`localhost:1025`, sem autenticação e sem TLS. Em `config.yaml`, ajuste `email.send: true`,
+`host: localhost`, `port: 1025`, `starttls: false` e `sender`. Envie uma solicitação sintética nova
+pela interface e execute o robô: a mensagem aparecerá no servidor local e continuará em `outbox/`.
+Para servidor autenticado, ative STARTTLS e forneça apenas pelas variáveis `SMTP_USER` e
+`SMTP_PASSWORD` (nomes em `.env.example`). Ambos vazios permitem teste local sem login.
+Falha SMTP mantém o rascunho, registra o erro e marca `status_email=falha` na planilha.
+O padrão permanece sem envio; os testes automatizados substituem SMTP por um falso, sem rede.
+
+```powershell
+..\.venv\Scripts\python -m robo.revisao --listar
+..\.venv\Scripts\python -m robo.revisao --fechar REQ-0011 --desfecho respondido --responsavel "Atendente Fictício" --observacao "Orientação prestada"
+```
+
+Use `--planilha caminho/controle_copia.xlsx` para testar numa cópia. Inexistente ou já fechado retorna
+código 1, sem traceback. O painel Streamlit também permite fechar pendências. Uma nova execução não
+reabre itens fechados; o desfecho humano permanece na aba `revisao_humana`.
+
 ## Saídas
 
 | Onde | O quê |
@@ -101,10 +128,18 @@ responde por template; envio real de e-mail (SMTP) é opcional e desligado por p
 
 ## Resultados (solicitações sintéticas rotuladas)
 
-60 pedidos de agricultores de 23 municípios do semiárido: classificação do serviço 93,8% · documentos
-conferidos pelo OCR 100% · decisão final 76,7% · **0 respostas automáticas sobre o serviço errado** em 35 ·
-8 revisões humanas desnecessárias. Detalhes, limites e falhas demonstradas em
+60 pedidos de agricultores de 23 municípios do semiárido: classificação do serviço 93,8% · conferência
+de documentos correta em 35/35 casos elegíveis · decisão final 83,3% · **0 respostas automáticas sobre
+o serviço errado** em 29 · 9 revisões humanas desnecessárias · 5/6 ambíguos encaminhados.
+Razão p1/p2 < 3,5 escolhida antes do teste em validação separada (9/12 ambíguos, 2/27 típicos revisados).
+Tabela e método em [eval/calibracao_ambiguidade.md](eval/calibracao_ambiguidade.md). Detalhes e limites em
 [docs/evidencias.md](docs/evidencias.md).
+
+Para reproduzir a validação: `python scripts/gerar_dados_sinteticos.py --validacao` e
+`python eval/calibrar_ambiguidade.py`. A avaliação aceita `--planilha caminho/controle.xlsx`.
+Use uma execução nova, sem registros antigos de duplicados, para avaliar os 60 pedidos.
+Resultados de `eval/`, corpus e cache são evidências versionadas; logs, planilhas e saídas operacionais
+são ignorados. O coletor evita regravar conteúdo idêntico.
 
 ## Estrutura
 
@@ -121,3 +156,5 @@ docs/                 quadro de temas, ética/ODS, evidências
 ```
 
 Todos os dados pessoais do projeto são fictícios. O conteúdo das Cartas de Serviço é público (gov.br).
+
+Licença do código: [MIT](LICENSE), 2026, Luís Fernando de Oliveira Salgado, Ricardo de Paiva Melo e Jonas Alaf.

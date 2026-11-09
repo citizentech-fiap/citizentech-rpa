@@ -9,8 +9,14 @@ failed/
 outbox/
 output/controle.xlsx
 output/relatorios/
+output/controle.corrompida.xlsx
+output/*.tmp.xlsx
 models/
 
 # ferramentas locais
 .claude/
 .pytest_cache/
+
+# anexos da validação: regenerados por scripts/gerar_dados_sinteticos.py --validacao (semente fixa);
+# a calibração de ambiguidade usa só o texto dos pedidos
+data/synthetic/inbox_validacao/anexos/

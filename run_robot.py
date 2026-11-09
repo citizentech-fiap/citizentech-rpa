@@ -63,6 +63,41 @@ def _hash(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
+def _salvar_registry(arquivo: Path, dados: dict) -> None:
+    arquivo.parent.mkdir(parents=True, exist_ok=True)
+    temporario = arquivo.with_suffix(".tmp")
+    temporario.write_text(json.dumps(dados, ensure_ascii=False, indent=1), encoding="utf-8")
+    temporario.replace(arquivo)
+
+
+def _gravar_motivo(arquivo: Path, motivo: str) -> None:
+    arquivo.parent.mkdir(parents=True, exist_ok=True)
+    arquivo.write_text(motivo, encoding="utf-8")
+
+
+def _mover_pedido(src: Path, base: Path, destino: Path) -> None:
+    """Inclui anexos declarados seguros e os identificados pelo nome do JSON inválido."""
+    from robo.inbox import _resolver_anexo
+    anexos = set()
+    try:
+        dados = json.loads(src.read_text(encoding="utf-8-sig"))
+        declarados = dados.get("anexos", []) if isinstance(dados, dict) else []
+        for nome in declarados if isinstance(declarados, list) else []:
+            if isinstance(nome, str):
+                anexo = _resolver_anexo(base.resolve(), nome)
+                if anexo:
+                    anexos.add(anexo)
+    except (OSError, ValueError):
+        pass
+    for candidato in (base / "anexos").glob(src.stem + "_*"):
+        anexo = _resolver_anexo(base.resolve(), str(candidato.resolve()))
+        if anexo:
+            anexos.add(anexo)
+    for arquivo in [*sorted(anexos), src]:
+        if arquivo.exists():
+            safe_call(_move, arquivo, base, destino, step="mover pedido e anexos")
+
+
 def _move(src: Path, base: Path, dest_root: Path) -> None:
     """Move preservando o caminho relativo à inbox (json + anexos)."""
     try:
@@ -102,6 +137,8 @@ def processar(req, corpus: dict, cfg: dict) -> dict:
         motivo_revisao = f"serviço incerto (confiança {conf:.2f})"
     elif segunda[0] and conf - segunda[1] < cfg["classifier"].get("min_margin", 0.0):
         motivo_revisao = f"pedido ambíguo entre {service_id} e {segunda[0]}"
+    elif segunda[0] and conf / max(segunda[1], 1e-12) < cfg["classifier"].get("min_ratio", 0.0):
+        motivo_revisao = f"pedido ambíguo entre {service_id} e {segunda[0]} (razão {conf / max(segunda[1], 1e-12):.2f})"
 
     # OCR: conferência de documentos contra a Carta de Serviço
     doc_check = None
@@ -134,7 +171,9 @@ def processar(req, corpus: dict, cfg: dict) -> dict:
             corpo = resp.corpo
         assunto = f"[{req.request_id}] {service['nome']} — orientações"
 
-    eml, err = safe_call(outputs.write_eml, req, assunto, corpo, step=f"eml {req.request_id}")
+    eml, err = safe_call(outputs.write_eml, req, assunto, corpo, resultado=r, step=f"eml {req.request_id}")
+    if err:
+        r.update(status_email="falha_rascunho", erro_email=err)
     r["eml"] = eml.name if eml else f"falha: {err}"
     r["tempo_s"] = round(time.perf_counter() - t0, 2)
     log.info("%s -> %s | %s (%.2f) | %s", req.request_id, r["decisao"], service_id, r["confianca"], r.get("motivo"))
@@ -155,6 +194,7 @@ def main(argv: list[str] | None = None) -> dict:
     run_id = datetime.now(BRT).strftime("%Y%m%d-%H%M%S")
     inicio = _now()
     log.info("===== Execução %s iniciada =====", run_id)
+    estado_rag = responder.estado_rag()
     inbox_dir = path("inbox")
     inbox_dir.mkdir(parents=True, exist_ok=True)
 
@@ -183,8 +223,8 @@ def main(argv: list[str] | None = None) -> dict:
         motivo = item.reason
         inval_rows.append({"run_id": run_id, "arquivo": Path(item.source_path).name, "motivo": motivo})
         sheet.upsert("invalidas", inval_rows[-1], key="arquivo")
-        safe_call(_move, Path(item.source_path), inbox_dir, path("failed"), step="mover inválido")
-        (path("failed") / f"{Path(item.source_path).name}.motivo.txt").write_text(motivo, encoding="utf-8")
+        safe_call(_mover_pedido, Path(item.source_path), inbox_dir, path("failed"), step="mover inválido")
+        safe_call(_gravar_motivo, path("failed") / f"{Path(item.source_path).name}.motivo.txt", motivo, step="gravar motivo")
 
     # Pedido cujos anexos declarados não existem nenhum: não há o que conferir -> inválido
     sem_anexo = [q for q in validas if getattr(q, "anexos_ausentes", None) and not q.anexos_abs]
@@ -194,8 +234,8 @@ def main(argv: list[str] | None = None) -> dict:
         log.error("%s inválida: %s", req.request_id, motivo)
         inval_rows.append({"run_id": run_id, "arquivo": Path(req.source_path).name, "motivo": motivo})
         sheet.upsert("invalidas", inval_rows[-1], key="arquivo")
-        safe_call(_move, Path(req.source_path), inbox_dir, path("failed"), step="mover inválido")
-        (path("failed") / f"{Path(req.source_path).name}.motivo.txt").write_text(motivo, encoding="utf-8")
+        safe_call(_mover_pedido, Path(req.source_path), inbox_dir, path("failed"), step="mover inválido")
+        safe_call(_gravar_motivo, path("failed") / f"{Path(req.source_path).name}.motivo.txt", motivo, step="gravar motivo")
     n_invalidas = len(invalidas) + len(sem_anexo)
 
     for req in validas:
@@ -204,7 +244,7 @@ def main(argv: list[str] | None = None) -> dict:
         if h in registry:  # idempotência: mesma solicitação já processada
             log.info("%s já processada na execução %s; pulando", req.request_id, registry[h]["run_id"])
             puladas += 1
-            safe_call(_move, src, inbox_dir, path("processed"), step="mover duplicada")
+            safe_call(_mover_pedido, src, inbox_dir, path("processed"), step="mover duplicada")
             continue
         r, err = safe_call(processar, req, corpus, cfg, default=None, step=f"processar {req.request_id}")
         if r is None:
@@ -220,11 +260,14 @@ def main(argv: list[str] | None = None) -> dict:
         if r["decisao"] == "revisao_humana":
             sheet.upsert("revisao_humana", {**r, "status": "pendente"})
         registry[h] = {"request_id": req.request_id, "run_id": run_id}
+        safe_call(sheet.save, step="salvar controle por pedido")
+        safe_call(_salvar_registry, reg_file, registry, step="salvar registro por pedido")
         for p in [src, *req.anexos_abs]:
             if Path(p).exists():
                 safe_call(_move, Path(p), inbox_dir, path("processed"), step="mover processada")
 
     summary = {
+        **estado_rag,
         "run_id": run_id, "inicio": inicio, "fim": _now(),
         "lidas": len(validas) + n_invalidas, "invalidas": n_invalidas,
         "resolvidas": sum(r["decisao"] == "resolvido" for r in resultados),
@@ -236,8 +279,7 @@ def main(argv: list[str] | None = None) -> dict:
     }
     sheet.upsert("execucoes", summary, key="run_id")
     sheet.save()
-    reg_file.parent.mkdir(parents=True, exist_ok=True)
-    reg_file.write_text(json.dumps(registry, ensure_ascii=False, indent=1), encoding="utf-8")
+    safe_call(_salvar_registry, reg_file, registry, step="salvar registro")
     rel, _ = safe_call(outputs.write_report, summary, resultados, inval_rows, step="relatório")
     log.info("===== Execução %s concluída: %s =====", run_id, {k: summary[k] for k in
              ("lidas", "invalidas", "resolvidas", "revisao_humana", "falhas", "puladas_duplicadas")})

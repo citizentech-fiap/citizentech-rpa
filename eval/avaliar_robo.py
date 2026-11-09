@@ -22,32 +22,13 @@ def _set(v) -> set[str]:
     return {x.strip() for x in str(v).split(";") if x.strip()}
 
 
-def _varredura(df: pd.DataFrame, labels: pd.DataFrame) -> str:
-    """Recalcula a decisão para vários limiares de confiança mantendo as outras regras (OCR, margem, escopo)."""
-    from robo.config import load_config
-    margem = load_config()["classifier"].get("min_margin", 0.0)
-    base = df[df["decisao"].isin(["resolvido", "revisao_humana"])].copy()
-    sol = pd.read_excel(path("control_sheet"), sheet_name="solicitacoes").drop_duplicates("request_id", keep="last")
-    seg = sol.set_index("request_id")["segunda_opcao"].fillna("").astype(str).str.extract(r"\(([\d.]+)\)")[0]
-    base["p2"] = base["request_id"].map(seg).astype(float).fillna(0.0)
-    mot = sol.set_index("request_id")["motivo"].fillna("").astype(str)
-    base["outro_motivo"] = base["request_id"].map(mot).str.contains("ilegível|fora do escopo|falha")
-    linhas = ["| limiar | respostas automáticas | erros graves | revisões desnecessárias | decisão correta |",
-              "|---|---|---|---|---|"]
-    for t in [0.2, 0.3, 0.35, 0.4, 0.45, 0.5, 0.6]:
-        auto = (~base["outro_motivo"]) & (base["confianca"] >= t) & ((base["confianca"] - base["p2"]) >= margem) \
-            & (base["servico_previsto"] != "fora_escopo") & (base["servico_previsto"] != "")
-        dec = auto.map({True: "resolvido", False: "revisao_humana"})
-        graves = (auto & (~base["servico_ok"] | (base["categoria"] == "fora_escopo"))).sum()
-        desnec = ((dec == "revisao_humana") & (base["decisao_esperada"] == "resolvido")).sum()
-        ok = (dec == base["decisao_esperada"]).sum() + (df["decisao"] == "invalido").sum()
-        linhas.append(f"| {t:.2f} | {auto.sum()} | {graves} | {desnec} | {ok / len(df):.1%} |")
-    return "\n".join(linhas)
-
-
 def main() -> None:
+    import argparse
+    ap = argparse.ArgumentParser(description="Avalia uma planilha contra o teste rotulado")
+    ap.add_argument("--planilha", type=Path, default=path("control_sheet"))
+    args = ap.parse_args()
     labels = pd.read_csv(path("synthetic") / "labels.csv", dtype=str).fillna("")
-    xl = pd.read_excel(path("control_sheet"), sheet_name=None)
+    xl = pd.read_excel(args.planilha, sheet_name=None)
     sol = xl["solicitacoes"].astype(object).drop_duplicates("request_id", keep="last").set_index("request_id")
     inval = set(Path(a).stem for a in xl.get("invalidas", pd.DataFrame(columns=["arquivo"]))["arquivo"].dropna())
 
@@ -110,8 +91,8 @@ def main() -> None:
           f"| Erro seguro: revisão humana desnecessária | {len(seguros)} | {len(df)} |", "",
           "Pedidos ambíguos: qualquer um dos dois serviços plausíveis conta como acerto de classificação, mas a "
           "decisão esperada é revisão humana.", "",
-          "## Efeito do limiar de confiança (simulado sobre as confianças registradas)", "",
-          _varredura(df, labels), "",
+          "Limiar congelado na validação: razão p1/p2 < 3,5; confiança mínima 0,45. "
+          "Veja [calibração](calibracao_ambiguidade.md). Nenhuma varredura de limiares no teste.", "",
           "## Decisão por categoria", "",
           df.groupby("categoria")["decisao_ok"].agg(["mean", "count"]).rename(
               columns={"mean": "acerto", "count": "n"}).to_markdown(floatfmt=".2f"), "",
@@ -123,7 +104,8 @@ def main() -> None:
                         "decisao_esperada", "decisao", "docs_esperados", "docs_previstos"] if c in erros]
     md.append(erros[cols].to_markdown(index=False) if len(erros) else "Nenhum erro na amostra.")
     (out_dir / "resultados_robo.md").write_text("\n".join(md) + "\n", encoding="utf-8")
-    print("\n".join(md[:24]))
+    from robo.resilience import get_logger
+    get_logger("avaliacao").info("\n%s", "\n".join(md[:24]))
 
 
 if __name__ == "__main__":

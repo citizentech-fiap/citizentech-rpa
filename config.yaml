@@ -24,7 +24,8 @@ collector:
 
 classifier:
   min_confidence: 0.45       # abaixo disso -> revisão humana
-  min_margin: 0.15           # diferença mínima entre 1º e 2º serviço; abaixo disso = ambíguo -> revisão humana
+  min_margin: 0.0            # desativada; substituída pela razão calibrada na validação
+  min_ratio: 3.5             # p1/p2 abaixo disso -> revisão; eval/calibracao_ambiguidade.md
 
 ocr:
   engine: rapidocr           # rapidocr (pip) | tesseract (opcional, requer instalação)
@@ -37,6 +38,10 @@ responder:
 
 email:
   send: false                # false = só gera .eml em outbox/ (rascunho)
+  host: localhost
+  port: 1025
+  starttls: false             # ative para servidor remoto que ofereça STARTTLS
+  sender: atendimento-citizentech@exemplo.gov.br
 
 # Catálogo de serviços do agricultor familiar do semiárido afetado pela seca.
 # documentos_exigidos usa os tipos canônicos de `document_types`, conferidos nas Cartas de Serviço do gov.br.

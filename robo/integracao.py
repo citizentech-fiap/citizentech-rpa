@@ -11,7 +11,7 @@ import importlib
 import sys
 from typing import Any
 
-from .config import path
+from .config import load_config, path
 
 
 def importar_rag_assistant() -> tuple[type | None, str]:
@@ -35,10 +35,11 @@ def importar_rag_assistant() -> tuple[type | None, str]:
 
 def criar_rag() -> tuple[Any | None, str]:
     """Instancia o assistente usando o corpus mais recente coletado por este robô."""
-    cls, origem = importar_rag_assistant()
-    if cls is None:
-        return None, origem
     try:
-        return cls(corpus_path=path("corpus")), origem
+        cls, origem = importar_rag_assistant()
+        if cls is None:
+            return None, origem
+        return cls(corpus_path=path("corpus"), overrides={
+            "llm": {"timeout_s": load_config()["responder"]["llm_timeout_s"]}}), origem
     except Exception as exc:
         return None, f"{type(exc).__name__}: {exc}"

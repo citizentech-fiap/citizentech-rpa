@@ -10,11 +10,11 @@ REQ-0008,ilegivel,caf,revisao_humana,caf,0.404,revisao_humana,template,True,,,
 REQ-0009,tipico,bpc,resolvido,bpc,0.8027,resolvido,template,True,True,cpf;documento_identidade,cpf;documento_identidade
 REQ-0010,tipico,caf,resolvido,caf,0.934,resolvido,template,True,True,comprovante_posse_terra;comprovante_renda;cpf,comprovante_posse_terra;comprovante_renda;cpf
 REQ-0011,ambiguo,pronaf,revisao_humana,pronaf,0.6356,resolvido,template,False,,,
-REQ-0012,ambiguo,cadunico,revisao_humana,bolsa_familia,0.5766,resolvido,template,False,,,
+REQ-0012,ambiguo,cadunico,revisao_humana,bolsa_familia,0.5766,revisao_humana,template,True,,,
 REQ-0013,tipico,bolsa_familia,resolvido,bolsa_familia,0.9422,resolvido,template,True,True,comprovante_residencia;cpf;documento_identidade,comprovante_residencia;cpf;documento_identidade
 REQ-0014,tipico,pronaf,resolvido,pronaf,0.6838,resolvido,template,True,True,caf;comprovante_posse_terra;cpf;documento_identidade,caf;comprovante_posse_terra;cpf;documento_identidade
 REQ-0015,tipico,cadunico,resolvido,cadunico,0.3771,revisao_humana,template,False,True,comprovante_residencia;cpf;documento_identidade,comprovante_residencia;cpf;documento_identidade
-REQ-0016,tipico,aposentadoria_rural,resolvido,aposentadoria_rural,0.5554,resolvido,template,True,True,cpf;documento_identidade,cpf;documento_identidade
+REQ-0016,tipico,aposentadoria_rural,resolvido,aposentadoria_rural,0.5554,revisao_humana,template,False,True,cpf;documento_identidade,cpf;documento_identidade
 REQ-0017,tipico,cadunico,resolvido,cadunico,0.7212,resolvido,template,True,True,comprovante_residencia;cpf;documento_identidade,comprovante_residencia;cpf;documento_identidade
 REQ-0018,tipico,cpf,resolvido,bpc,0.2591,revisao_humana,template,False,,,
 REQ-0019,invalido,cadunico,invalido,,,invalido,,True,,,
@@ -43,13 +43,13 @@ REQ-0041,tipico,pronaf,resolvido,pronaf,0.4968,resolvido,template,True,True,caf;
 REQ-0042,tipico,caf,resolvido,caf,0.4502,resolvido,template,True,True,comprovante_posse_terra;comprovante_renda;cpf,comprovante_posse_terra;comprovante_renda;cpf
 REQ-0043,tipico,bolsa_familia,resolvido,bolsa_familia,0.913,resolvido,template,True,True,comprovante_residencia;cpf;documento_identidade,comprovante_residencia;cpf;documento_identidade
 REQ-0044,tipico,salario_maternidade_rural,resolvido,salario_maternidade_rural,0.7441,resolvido,template,True,True,cpf;documento_identidade,cpf;documento_identidade
-REQ-0045,ambiguo,aposentadoria_rural,revisao_humana,aposentadoria_rural,0.563,resolvido,template,False,,,
+REQ-0045,ambiguo,aposentadoria_rural,revisao_humana,aposentadoria_rural,0.563,revisao_humana,template,True,,,
 REQ-0046,tipico,cpf,resolvido,caf,0.2823,revisao_humana,template,False,,,
 REQ-0047,fora_escopo,fora_escopo,revisao_humana,fora_escopo,0.3453,revisao_humana,template,True,,,
-REQ-0048,ambiguo,bolsa_familia,revisao_humana,cadunico,0.524,resolvido,template,False,,,
+REQ-0048,ambiguo,bolsa_familia,revisao_humana,cadunico,0.524,revisao_humana,template,True,,,
 REQ-0049,docs_faltando,caf,resolvido,caf,0.8705,resolvido,template,True,True,comprovante_renda;cpf,comprovante_renda;cpf
 REQ-0050,fora_escopo,fora_escopo,revisao_humana,garantia_safra,0.2833,revisao_humana,template,True,,,
-REQ-0051,ambiguo,caf,revisao_humana,pronaf,0.4808,resolvido,template,False,,,
+REQ-0051,ambiguo,caf,revisao_humana,pronaf,0.4808,revisao_humana,template,True,,,
 REQ-0052,tipico,bolsa_familia,resolvido,bolsa_familia,0.8017,resolvido,template,True,True,comprovante_residencia;cpf;documento_identidade,comprovante_residencia;cpf;documento_identidade
 REQ-0053,docs_faltando,bolsa_familia,resolvido,bolsa_familia,0.9287,resolvido,template,True,True,comprovante_residencia;cpf,comprovante_residencia;cpf
 REQ-0054,docs_faltando,caf,resolvido,caf,0.349,revisao_humana,template,False,True,comprovante_posse_terra;comprovante_renda,comprovante_posse_terra;comprovante_renda
@@ -58,4 +58,4 @@ REQ-0056,invalido,aposentadoria_rural,invalido,,,invalido,,True,,,
 REQ-0057,tipico,garantia_safra,resolvido,garantia_safra,0.9211,resolvido,template,True,True,caf;cpf;documento_identidade,caf;cpf;documento_identidade
 REQ-0058,docs_faltando,bpc,resolvido,bpc,0.9016,resolvido,template,True,True,,
 REQ-0059,docs_faltando,pronaf,resolvido,pronaf,0.815,resolvido,template,True,True,comprovante_posse_terra;documento_identidade,comprovante_posse_terra;documento_identidade
-REQ-0060,ambiguo,garantia_safra,revisao_humana,pronaf,0.5438,resolvido,template,False,,,
+REQ-0060,ambiguo,garantia_safra,revisao_humana,pronaf,0.5438,revisao_humana,template,True,,,

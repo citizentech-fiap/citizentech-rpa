@@ -9,7 +9,7 @@ from typing import Any
 from openpyxl import Workbook, load_workbook
 
 from .config import env, load_config, path
-from .resilience import get_logger, retry
+from .resilience import get_logger
 
 log = get_logger("outputs")
 
@@ -17,19 +17,24 @@ SHEETS = {
     "solicitacoes": ["run_id", "request_id", "data_envio", "service_id", "confianca", "segunda_opcao",
                      "decisao", "motivo",
                      "docs_presentes", "docs_faltantes", "docs_ilegiveis", "anexos_ausentes",
-                     "fonte_resposta", "motivo_fallback", "eml", "tempo_s", "municipio", "uf", "cod_ibge"],
+                     "fonte_resposta", "motivo_fallback", "eml", "tempo_s", "municipio", "uf", "cod_ibge",
+                     "status_email", "erro_email"],
     "revisao_humana": ["run_id", "request_id", "motivo", "service_id", "confianca", "status",
-                      "municipio", "uf", "cod_ibge"],
+                      "municipio", "uf", "cod_ibge", "desfecho", "responsavel", "fechado_em", "observacao"],
     "execucoes": ["run_id", "inicio", "fim", "lidas", "invalidas", "resolvidas", "revisao_humana",
-                  "falhas", "puladas_duplicadas", "corpus_atualizados", "corpus_cache", "corpus_falhas"],
+                  "falhas", "puladas_duplicadas", "corpus_atualizados", "corpus_cache", "corpus_falhas",
+                  "rag_disponivel", "motivo_rag"],
     "invalidas": ["run_id", "arquivo", "motivo"],
 }
 
 
-def write_eml(request: Any, subject: str, body: str) -> Path:
+def write_eml(request: Any, subject: str, body: str, resultado: dict | None = None) -> Path:
     """Gera o e-mail de resposta. Por padrão só grava o rascunho; envio real é opcional via .env."""
     msg = EmailMessage()
-    msg["From"] = "atendimento-citizentech@exemplo.gov.br"
+    cfg = load_config()["email"]
+    resultado = resultado if resultado is not None else {}
+    resultado.update(status_email="rascunho", erro_email="")
+    msg["From"] = cfg.get("sender", "atendimento-citizentech@exemplo.gov.br")
     msg["To"] = getattr(request, "email", "") or "cidadao@exemplo.com"
     msg["Subject"] = subject
     nome = (getattr(request, "nome", "") or "cidadão(ã)").split()[0]
@@ -38,22 +43,26 @@ def write_eml(request: Any, subject: str, body: str) -> Path:
     out = path("outbox") / f"{request.request_id}.eml"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_bytes(bytes(msg))
-    if load_config()["email"].get("send"):
+    if cfg.get("send"):
         try:
             _send_smtp(msg)
+            resultado["status_email"] = "enviado"
         except Exception as exc:  # e-mail falhou: rascunho continua em outbox/
             log.error("Envio SMTP falhou para %s, rascunho mantido: %s", request.request_id, exc)
+            resultado.update(status_email="falha", erro_email=type(exc).__name__)
     return out
 
 
-@retry(times=3, backoff_s=2)
 def _send_smtp(msg: EmailMessage) -> None:
-    host, user, pwd = env("SMTP_HOST"), env("SMTP_USER"), env("SMTP_PASSWORD")
-    if not (host and user and pwd):
-        raise RuntimeError("SMTP não configurado no .env")
-    with smtplib.SMTP(host, int(env("SMTP_PORT", "587")), timeout=20) as s:
-        s.starttls()
-        s.login(user, pwd)
+    cfg = load_config()["email"]
+    user, pwd = env("SMTP_USER"), env("SMTP_PASSWORD")
+    if bool(user) != bool(pwd):
+        raise RuntimeError("Informe SMTP_USER e SMTP_PASSWORD juntos")
+    with smtplib.SMTP(cfg["host"], int(cfg["port"]), timeout=20) as s:
+        if cfg.get("starttls", True):
+            s.starttls()
+        if user and pwd:
+            s.login(user, pwd)
         s.send_message(msg)
 
 
@@ -95,6 +104,8 @@ class ControlSheet:
             idx = header.index(key)
             for r in ws.iter_rows(min_row=2):
                 if r[idx].value == row.get(key):
+                    if sheet == "revisao_humana" and r[header.index("status")].value == "fechado":
+                        return  # uma nova execução nunca reabre nem apaga o desfecho humano
                     for c, v in zip(r, values):
                         c.value = v
                     return
@@ -122,6 +133,7 @@ def write_report(summary: dict, resultados: list[dict], invalidas: list[dict]) -
         f"# Relatório de execução {summary['run_id']}",
         "",
         f"- Início: {summary['inicio']}  |  Fim: {summary['fim']}",
+        f"- **RAG disponível: {summary.get('rag_disponivel')} — {summary.get('motivo_rag')}**",
         f"- Solicitações lidas: {summary['lidas']}  |  inválidas: {summary['invalidas']}  |  "
         f"duplicadas puladas: {summary['puladas_duplicadas']}",
         f"- Resolvidas automaticamente: {summary['resolvidas']}  |  revisão humana: {summary['revisao_humana']}  |  "

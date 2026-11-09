@@ -61,9 +61,9 @@ contém `alternativa=<service_id>`. Requisitos e tipos de documentos vêm do con
 
 ## Planilha de controle — `RPA/output/controle.xlsx`
 
-- `solicitacoes`: `run_id,request_id,data_envio,service_id,confianca,segunda_opcao,decisao,motivo,docs_presentes,docs_faltantes,docs_ilegiveis,anexos_ausentes,fonte_resposta,motivo_fallback,eml,tempo_s,municipio,uf,cod_ibge`.
-- `revisao_humana`: `run_id,request_id,motivo,service_id,confianca,status,municipio,uf,cod_ibge`.
-- `execucoes`: `run_id,inicio,fim,lidas,invalidas,resolvidas,revisao_humana,falhas,puladas_duplicadas,corpus_atualizados,corpus_cache,corpus_falhas`.
+- `solicitacoes`: `run_id,request_id,data_envio,service_id,confianca,segunda_opcao,decisao,motivo,docs_presentes,docs_faltantes,docs_ilegiveis,anexos_ausentes,fonte_resposta,motivo_fallback,eml,tempo_s,municipio,uf,cod_ibge,status_email,erro_email`.
+- `revisao_humana`: `run_id,request_id,motivo,service_id,confianca,status,municipio,uf,cod_ibge,desfecho,responsavel,fechado_em,observacao`.
+- `execucoes`: `run_id,inicio,fim,lidas,invalidas,resolvidas,revisao_humana,falhas,puladas_duplicadas,corpus_atualizados,corpus_cache,corpus_falhas,rag_disponivel,motivo_rag`.
 - `invalidas`: `run_id,arquivo,motivo`.
 
 Localização é copiada da solicitação, inclusive em falhas encaminhadas para revisão. Campos
@@ -71,6 +71,33 @@ vazios aparecem como células vazias; `cod_ibge` preenchido é texto. Listas de 
 serializadas com `; `. Ao abrir planilhas antigas, colunas ausentes são acrescentadas ao fim,
 preservando os dados e a ordem das colunas existentes. Linhas são atualizadas por `request_id`
 (`run_id` em `execucoes`, `arquivo` em `invalidas`).
+
+`status_email`: `rascunho` (envio desligado), `enviado`, `falha` (SMTP; .eml preservado) ou
+`falha_rascunho`. `erro_email` registra o tipo da falha SMTP, sem credenciais. Não há retry de envio
+automático: uma confirmação SMTP perdida pode deixar a entrega incerta; repetir poderia duplicar o e-mail.
+`rag_disponivel` indica carregamento do assistente/índice, não garante disponibilidade da API Gemini.
+`motivo_rag`: `carregado`, `genai_desativado` ou descrição da falha inicial.
+
+`robo.revisao.fechar(request_id, desfecho, responsavel, observacao="", arquivo=None)` fecha a fila
+atomicamente: `status=fechado`, desfecho em `respondido|encaminhado|indeferido`, responsável obrigatório
+e `fechado_em` ISO 8601 com fuso -03:00. Inexistente/já fechado gera ValueError; CLI retorna 1 sem traceback.
+`listar(arquivo=None)` devolve apenas pendentes. Execuções posteriores preservam integralmente uma linha
+fechada. A decisão automática em `solicitacoes` permanece como histórico da triagem; o desfecho humano
+fica na fila. As colunas selecionadas em `../dashboard/providers/rpa.py` mantêm seus nomes.
+
+Validação: `inbox_validacao` e `labels_validacao.csv`, semente 20261109, 27 típicos e 12 ambíguos.
+Mesmo formato do teste, IDs `VAL-xxxx`, textos de autoria separada em `scripts/textos_validacao.py`.
+Calibração em `eval/calibracao_ambiguidade.md`: confiança mínima 0,45 e razão p1/p2 < 3,5,
+controladas em `config.yaml`; margem desativada (0). Nenhum retreino usa a validação ou o teste.
+
+`processed/registry.json`: mapa SHA-256 do JSON → `{request_id,run_id}`, salvo após cada pedido
+por temporário + replace. Falha de gravação é registrada sem interromper a fila. E-mail, planilha e registro
+não formam uma transação distribuída: uma queda entre entrega e persistência ainda pode exigir conciliação.
+Inválidos/duplicados movem também anexos seguros declarados e arquivos `anexos/<nome_do_json>_*`;
+para JSON malformado, apenas esse vínculo de nome pode ser recuperado. Caminhos externos são ignorados.
+
+Corpus e cache continuam versionados. Conteúdo idêntico não é regravado; data de coleta original
+é preservada quando o cache não mudou. O log ignorado registra a verificação de cada execução.
 
 ## Interfaces Python
 - `robo.inbox.load_requests(inbox_dir) -> tuple[list[Request], list[InvalidItem]]`
@@ -87,7 +114,11 @@ preservando os dados e a ordem das colunas existentes. Linhas são atualizadas p
 - `robo.ocr.identify_doc_type(text) -> tuple[str | None, float]` (tipo canônico de `document_types`)
 - `robo.ocr.check_documents(attachments: list[Path], required: list[str]) -> DocCheck(presentes, faltantes, ilegiveis, detalhes)`
 - `robo.collector.update_corpus() -> CollectResult(atualizados, inalterados, falhas, usou_cache)`
-- RAG: `citizen_rag.rag.RAGAssistant(corpus_path=None).answer(question, history=None, service_id=None) -> dict`
+- RAG: `citizen_rag.rag.RAGAssistant(corpus_path=None, overrides=None).answer(question, history=None, service_id=None) -> dict`
   com chaves `answer: str`, `citations: list[{n, service_id, titulo, url, secao}]`, `abstained: bool`,
   `reason: str | None`, `chunks: list[{id, text, score, metadata}]`, `blocked: bool`.
   Nunca lança exceção para erro de LLM: devolve `abstained=True`/`reason` e o robô cai no template.
+  O robô aplica `responder.llm_timeout_s` à espera de `answer` num executor compartilhado (um trabalhador)
+  e repassa `overrides={"llm": {"timeout_s": valor}}`. Timeout retorna template/`timeout_rag`.
+  Uma chamada já iniciada não é interrompida pela thread: pode terminar depois do fallback e o encerramento
+  do Python aguarda o trabalhador; chamadas enfileiradas são canceladas quando expira seu prazo.

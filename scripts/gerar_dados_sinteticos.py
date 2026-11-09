@@ -672,7 +672,8 @@ def plano_de_casos() -> list[dict]:
     return casos
 
 
-def gerar_teste(rng: random.Random, nrng: np.random.Generator, out_dir: Path) -> list[dict]:
+def gerar_teste(rng: random.Random, nrng: np.random.Generator, out_dir: Path,
+                casos: list[dict] | None = None, prefixo: str = "REQ") -> list[dict]:
     cfg = load_config()
     exigidos = {s["id"]: list(s["documentos_exigidos"]) for s in cfg["services"]}
     todos_tipos = list(cfg["document_types"])
@@ -680,7 +681,7 @@ def gerar_teste(rng: random.Random, nrng: np.random.Generator, out_dir: Path) ->
     anexos_dir = out_dir / "anexos"
     anexos_dir.mkdir(parents=True, exist_ok=True)
 
-    casos = plano_de_casos()
+    casos = plano_de_casos() if casos is None else casos
     ids = list(range(1, len(casos) + 1))
     rng.shuffle(ids)  # categorias espalhadas, não em blocos
     proximo_texto = {sid: 0 for sid in TEXTOS_TESTE}
@@ -690,7 +691,7 @@ def gerar_teste(rng: random.Random, nrng: np.random.Generator, out_dir: Path) ->
     labels: list[dict] = []
 
     for caso, num in zip(casos, ids):
-        rid = f"REQ-{num:04d}"
+        rid = f"{prefixo}-{num:04d}"
         cat, sid = caso["categoria"], caso["service_id"]
         if "texto" in caso:
             texto = caso["texto"]
@@ -807,6 +808,13 @@ def gerar_teste(rng: random.Random, nrng: np.random.Generator, out_dir: Path) ->
 
 
 def main() -> None:
+    import argparse
+    ap = argparse.ArgumentParser(description="Gera conjuntos sintéticos separados")
+    ap.add_argument("--validacao", action="store_true")
+    args = ap.parse_args()
+    if args.validacao:
+        gerar_validacao()
+        return
     rng = random.Random(SEED)
     nrng = np.random.default_rng(SEED)
     base = path("synthetic")
@@ -838,6 +846,24 @@ def main() -> None:
     log.info("Teste: %d solicitações -> %s", len(labels), dict(Counter(r["categoria"] for r in labels)))
     n_anexos = len(list((inbox / "anexos").iterdir()))
     log.info("Anexos gerados: %d em %s", n_anexos, inbox / "anexos")
+
+
+def gerar_validacao() -> None:
+    """Redação própria, semente distinta e mesma montagem de pessoas/anexos do teste."""
+    from scripts.textos_validacao import TIPICOS, AMBIGUOS_VALIDACAO
+    ativos = {s["id"] for s in load_config()["services"]}
+    casos = [{"categoria": "tipico", "service_id": sid, "texto": texto}
+             for sid, textos in TIPICOS.items() if sid in ativos for texto in textos]
+    casos += [{"categoria": "ambiguo", "service_id": sid, "alternativa": alt, "texto": texto}
+              for sid, alt, texto in AMBIGUOS_VALIDACAO if {sid, alt} <= ativos]
+    base = path("synthetic")
+    labels = gerar_teste(random.Random(20261109), np.random.default_rng(20261109),
+                         base / "inbox_validacao", casos, "VAL")
+    with (base / "labels_validacao.csv").open("w", newline="", encoding="utf-8") as fh:
+        escritor = csv.DictWriter(fh, fieldnames=list(labels[0]))
+        escritor.writeheader()
+        escritor.writerows(labels)
+    log.info("Validação gerada: %d pedidos; semente 20261109", len(labels))
 
 
 if __name__ == "__main__":

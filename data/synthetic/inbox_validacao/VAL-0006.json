@@ -1,0 +1,14 @@
+{
+  "request_id": "VAL-0006",
+  "data_envio": "2026-11-04T12:22:00-03:00",
+  "municipio": "Petrolina",
+  "uf": "PE",
+  "cod_ibge": "2611101",
+  "nome": "Fulano de Tal",
+  "email": "fulano.ficticio39@exemplo.com",
+  "texto": "Minha tia idosa sem contribuição quer solicitar benefício assistencial de prestação continuada. Sou de Petrolina/PE, Comunidade Fictícia Mandacaru.",
+  "anexos": [
+    "anexos/VAL-0006_cpf.png",
+    "anexos/VAL-0006_documento_identidade.png"
+  ]
+}

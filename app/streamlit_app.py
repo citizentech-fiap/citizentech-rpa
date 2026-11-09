@@ -29,13 +29,31 @@ def get_rag():
     return (rag, None) if rag is not None else (None, origem)
 
 
+SEM_MUNICIPIO = "Não informar"
+
+
+@st.cache_data
+def municipios() -> dict[str, dict[str, str]]:
+    """Municípios atendidos, rotulados como 'Nome (UF)'. Sem o arquivo, o campo fica só com 'Não informar'."""
+    try:
+        tabela = pd.read_csv(ROOT / "data" / "municipios_semiarido.csv", dtype=str, encoding="utf-8-sig")
+    except (OSError, ValueError):
+        return {}
+    return {f"{m.municipio} ({m.uf})": {"municipio": m.municipio, "uf": m.uf, "cod_ibge": m.cod_ibge}
+            for m in tabela.sort_values("municipio").itertuples()}
+
+
 def pagina_enviar():
     st.header("Enviar solicitação")
     st.caption("Protótipo acadêmico: use apenas dados fictícios. Nenhum dado pessoal real deve ser enviado.")
+    locais = municipios()
     with st.form("solicitacao", clear_on_submit=True):
         nome = st.text_input("Nome (fictício)", "Fulano de Tal")
         email = st.text_input("E-mail (fictício)", "fulano@exemplo.com")
-        texto = st.text_area("Do que você precisa?", placeholder="Ex.: Fui demitido e quero pedir o seguro-desemprego.")
+        local = st.selectbox("Município", [SEM_MUNICIPIO, *locais],
+                             help="Usado para agrupar os pedidos por município no painel do gestor.")
+        texto = st.text_area("Do que você precisa?",
+                             placeholder="Ex.: Perdi a roça de milho na seca e quero entrar no Garantia-Safra.")
         anexos = st.file_uploader("Documentos (imagem ou PDF)", type=["png", "jpg", "jpeg", "pdf"],
                                   accept_multiple_files=True)
         ok = st.form_submit_button("Enviar")
@@ -52,7 +70,7 @@ def pagina_enviar():
             (inbox / rel).write_bytes(f.getvalue())
             rels.append(rel.as_posix())
         req = {"request_id": rid, "data_envio": datetime.now(BRT).isoformat(timespec="seconds"),
-               "nome": nome, "email": email, "texto": texto, "anexos": rels}
+               "nome": nome, "email": email, **locais.get(local, {}), "texto": texto, "anexos": rels}
         (inbox / f"{rid}.json").write_text(json.dumps(req, ensure_ascii=False, indent=1), encoding="utf-8")
         st.success(f"Solicitação {rid} registrada na fila do robô.")
 
@@ -102,6 +120,21 @@ def pagina_painel():
     if rev is not None and len(rev):
         st.subheader("Fila de revisão humana")
         st.dataframe(rev, use_container_width=True, hide_index=True)
+        pendentes = rev.loc[rev["status"] == "pendente", "request_id"].tolist()
+        if pendentes:
+            from robo.revisao import DESFECHOS, fechar
+            with st.form("fechar_revisao"):
+                pedido = st.selectbox("Pedido pendente", pendentes)
+                desfecho = st.selectbox("Desfecho", DESFECHOS)
+                responsavel = st.text_input("Responsável")
+                observacao = st.text_area("Observação")
+                if st.form_submit_button("Fechar revisão"):
+                    try:
+                        fechar(pedido, desfecho, responsavel, observacao)
+                        st.success("Revisão fechada.")
+                        st.rerun()
+                    except (ValueError, OSError) as exc:
+                        st.error(str(exc))
     if exe is not None and len(exe):
         st.subheader("Execuções")
         st.dataframe(exe.sort_values("run_id", ascending=False), use_container_width=True, hide_index=True)

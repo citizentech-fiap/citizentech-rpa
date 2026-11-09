@@ -1,0 +1,14 @@
+{
+  "request_id": "VAL-0020",
+  "data_envio": "2026-11-04T14:22:00-03:00",
+  "municipio": "Serra Talhada",
+  "uf": "PE",
+  "cod_ibge": "2613909",
+  "nome": "Clara Protótipo Nunes",
+  "email": "clara.ficticio52@exemplo.com",
+  "texto": "Durante o afastamento pelo parto, como a segurada especial pede auxílio maternidade?",
+  "anexos": [
+    "anexos/VAL-0020_cpf.png",
+    "anexos/VAL-0020_documento_identidade.png"
+  ]
+}

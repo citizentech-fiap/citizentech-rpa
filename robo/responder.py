@@ -6,7 +6,7 @@ a resposta é montada por template a partir dos dados estruturados da Carta de S
 """
 from __future__ import annotations
 
-import sys
+from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -17,6 +17,7 @@ from .resilience import get_logger
 log = get_logger("responder")
 _RAG: Any = None
 _RAG_ERROR: str | None = None
+_EXECUTOR = ThreadPoolExecutor(max_workers=1, thread_name_prefix="rag")
 
 
 @dataclass
@@ -36,10 +37,22 @@ def _get_rag() -> Any:
     _RAG, origem = criar_rag()
     if _RAG is None:  # caminho seguro: segue com template
         _RAG_ERROR = origem
-        log.warning("RAG indisponível, usando template: %s", origem)
     else:
         log.info("Assistente RAG carregado (%s)", origem)
     return _RAG
+
+
+def estado_rag() -> dict:
+    """Verifica disponibilidade no início, mesmo quando a inbox está vazia."""
+    if not load_config()["responder"].get("use_genai", True):
+        return {"rag_disponivel": False, "motivo_rag": "genai_desativado"}
+    rag = _get_rag()
+    motivo = _RAG_ERROR or getattr(rag, "_init_error", None)
+    if rag is None or motivo:
+        motivo = motivo or "rag_indisponivel"
+        log.warning("ATENÇÃO: RAG indisponível; execução usará templates: %s", motivo)
+        return {"rag_disponivel": False, "motivo_rag": motivo}
+    return {"rag_disponivel": True, "motivo_rag": "carregado"}
 
 
 def _secao(rec: dict | None, nome: str) -> str:
@@ -96,7 +109,12 @@ def gerar_resposta(texto: str, service: dict, rec: dict | None, doc_check: Any) 
     if rag is None:
         return Resposta(base, "template", motivo_fallback="rag_indisponivel")
     try:
-        out = rag.answer(mask_pii(texto), service_id=service["id"])  # nunca envia PII ao LLM
+        futuro = _EXECUTOR.submit(rag.answer, mask_pii(texto), service_id=service["id"])
+        out = futuro.result(timeout=float(load_config()["responder"]["llm_timeout_s"]))
+    except TimeoutError:
+        futuro.cancel()
+        log.warning("Tempo limite do RAG excedido; usando template")
+        return Resposta(base, "template", motivo_fallback="timeout_rag")
     except Exception as exc:
         log.exception("Erro no RAG: %s", exc)
         return Resposta(base, "template", motivo_fallback=f"erro_rag: {exc}")

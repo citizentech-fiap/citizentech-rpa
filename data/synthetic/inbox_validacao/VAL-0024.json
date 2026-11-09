@@ -1,0 +1,15 @@
+{
+  "request_id": "VAL-0024",
+  "data_envio": "2026-11-01T09:13:00-03:00",
+  "municipio": "Petrolina",
+  "uf": "PE",
+  "cod_ibge": "2611101",
+  "nome": "Raimundo Exemplar Gomes",
+  "email": "raimundo.ficticio73@exemplo.com",
+  "texto": "Quero desbloquear parcelas do Bolsa Família e corrigir o endereço na entrevista do Cadastro Único. Sou de Petrolina/PE, Comunidade Fictícia Mandacaru.",
+  "anexos": [
+    "anexos/VAL-0024_cpf.png",
+    "anexos/VAL-0024_documento_identidade.png",
+    "anexos/VAL-0024_comprovante_residencia.png"
+  ]
+}

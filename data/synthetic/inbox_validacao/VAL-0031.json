@@ -1,0 +1,15 @@
+{
+  "request_id": "VAL-0031",
+  "data_envio": "2026-11-02T07:53:00-03:00",
+  "municipio": "Ouricuri",
+  "uf": "PE",
+  "cod_ibge": "2609907",
+  "nome": "José Fictício Souza",
+  "email": "jose.ficticio72@exemplo.com",
+  "texto": "A estiagem arrasou o cultivo de algodão e estou inscrito no Garantia-Safra. Onde acompanho minha compensação?",
+  "anexos": [
+    "anexos/VAL-0031_caf.pdf",
+    "anexos/VAL-0031_documento_identidade.pdf",
+    "anexos/VAL-0031_cpf.pdf"
+  ]
+}

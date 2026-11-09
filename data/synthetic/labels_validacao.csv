@@ -1,0 +1,40 @@
+request_id,service_id,docs_presentes,docs_ilegiveis,resultado_esperado,categoria,observacao,municipio,uf,cod_ibge
+VAL-0001,pronaf,cpf;documento_identidade;caf;comprovante_posse_terra,,revisao_humana,ambiguo,alternativa=caf,Arcoverde,PE,2601201
+VAL-0002,aposentadoria_rural,documento_identidade;cpf,,resolvido,tipico,,Delmiro Gouveia,AL,2702405
+VAL-0003,pronaf,documento_identidade;cpf;caf;comprovante_posse_terra,,resolvido,tipico,,Santana do Ipanema,AL,2708006
+VAL-0004,caf,cpf;comprovante_posse_terra;comprovante_renda,,revisao_humana,ambiguo,alternativa=garantia_safra,Quixadá,CE,2311306
+VAL-0005,pronaf,cpf;documento_identidade;caf;comprovante_posse_terra,,resolvido,tipico,,Arcoverde,PE,2601201
+VAL-0006,bpc,cpf;documento_identidade,,resolvido,tipico,,Petrolina,PE,2611101
+VAL-0007,cpf,documento_identidade;certidao_civil,,resolvido,tipico,,Iguatu,CE,2305506
+VAL-0008,caf,comprovante_renda;comprovante_posse_terra;cpf,,resolvido,tipico,,Santana do Ipanema,AL,2708006
+VAL-0009,bpc,documento_identidade;cpf,,revisao_humana,ambiguo,alternativa=aposentadoria_rural,Petrolina,PE,2611101
+VAL-0010,bolsa_familia,documento_identidade;comprovante_residencia;cpf;certidao_civil,,resolvido,tipico,,Crateús,CE,2304103
+VAL-0011,bpc,cpf;documento_identidade,,resolvido,tipico,,Quixadá,CE,2311306
+VAL-0012,cadunico,cpf;comprovante_residencia;documento_identidade,,revisao_humana,ambiguo,alternativa=bpc,Serra Talhada,PE,2613909
+VAL-0013,cadunico,comprovante_residencia;cpf;documento_identidade,,resolvido,tipico,,Petrolina,PE,2611101
+VAL-0014,cadunico,cpf;comprovante_residencia;documento_identidade;comprovante_posse_terra,,resolvido,tipico,,Serra Talhada,PE,2613909
+VAL-0015,pronaf,caf;documento_identidade;cpf;comprovante_posse_terra,,revisao_humana,ambiguo,alternativa=garantia_safra,Nossa Senhora da Glória,SE,2804508
+VAL-0016,cpf,certidao_civil;documento_identidade,,resolvido,tipico,,Caicó,RN,2402006
+VAL-0017,salario_maternidade_rural,cpf;comprovante_residencia;documento_identidade,,resolvido,tipico,,Petrolina,PE,2611101
+VAL-0018,caf,cpf;comprovante_posse_terra;comprovante_renda,,resolvido,tipico,,Arcoverde,PE,2601201
+VAL-0019,cpf,certidao_civil;documento_identidade,,revisao_humana,ambiguo,alternativa=caf,Petrolina,PE,2611101
+VAL-0020,salario_maternidade_rural,cpf;documento_identidade,,resolvido,tipico,,Serra Talhada,PE,2613909
+VAL-0021,bolsa_familia,comprovante_residencia;documento_identidade;cpf,,resolvido,tipico,,Petrolina,PE,2611101
+VAL-0022,pronaf,caf;cpf;documento_identidade;comprovante_posse_terra,,resolvido,tipico,,Serra Talhada,PE,2613909
+VAL-0023,bolsa_familia,comprovante_residencia;documento_identidade;cpf;certidao_civil,,resolvido,tipico,,Crateús,CE,2304103
+VAL-0024,bolsa_familia,cpf;documento_identidade;comprovante_residencia,,revisao_humana,ambiguo,alternativa=cadunico,Petrolina,PE,2611101
+VAL-0025,aposentadoria_rural,cpf;documento_identidade,,resolvido,tipico,,Crateús,CE,2304103
+VAL-0026,caf,comprovante_posse_terra;cpf;comprovante_renda,,resolvido,tipico,,Serra Talhada,PE,2613909
+VAL-0027,cpf,documento_identidade;certidao_civil,,resolvido,tipico,,Petrolina,PE,2611101
+VAL-0028,aposentadoria_rural,documento_identidade;cpf,,revisao_humana,ambiguo,alternativa=bpc,Petrolina,PE,2611101
+VAL-0029,aposentadoria_rural,documento_identidade;cpf,,resolvido,tipico,,Petrolina,PE,2611101
+VAL-0030,salario_maternidade_rural,cpf;documento_identidade,,resolvido,tipico,,Arcoverde,PE,2601201
+VAL-0031,garantia_safra,caf;documento_identidade;cpf,,resolvido,tipico,,Ouricuri,PE,2609907
+VAL-0032,salario_maternidade_rural,cpf;documento_identidade,,revisao_humana,ambiguo,alternativa=bolsa_familia,Juazeiro,BA,2918407
+VAL-0033,cadunico,cpf;documento_identidade;comprovante_residencia,,resolvido,tipico,,São Raimundo Nonato,PI,2210607
+VAL-0034,caf,comprovante_renda;comprovante_posse_terra;cpf,,revisao_humana,ambiguo,alternativa=pronaf,Serra Talhada,PE,2613909
+VAL-0035,garantia_safra,caf;cpf;comprovante_residencia;documento_identidade,,resolvido,tipico,,Petrolina,PE,2611101
+VAL-0036,garantia_safra,cpf;caf;documento_identidade,,resolvido,tipico,,Serra Talhada,PE,2613909
+VAL-0037,bpc,documento_identidade;cpf,,resolvido,tipico,,Ouricuri,PE,2609907
+VAL-0038,garantia_safra,cpf;caf;documento_identidade,,revisao_humana,ambiguo,alternativa=pronaf,Nossa Senhora da Glória,SE,2804508
+VAL-0039,cadunico,comprovante_residencia;documento_identidade;cpf,,revisao_humana,ambiguo,alternativa=bolsa_familia,Ouricuri,PE,2609907

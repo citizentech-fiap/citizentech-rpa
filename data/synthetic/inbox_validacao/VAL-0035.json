@@ -1,0 +1,17 @@
+{
+  "request_id": "VAL-0035",
+  "data_envio": "2026-11-04T10:37:00-03:00",
+  "municipio": "Petrolina",
+  "uf": "PE",
+  "cod_ibge": "2611101",
+  "nome": "Tereza Ficção Martins",
+  "email": "tereza.ficticio78@exemplo.com",
+  "cpf": "130.476.596-61",
+  "texto": "O município confirmou a perda agrícola. Quero apresentar os papéis do seguro safra.",
+  "anexos": [
+    "anexos/VAL-0035_caf.png",
+    "anexos/VAL-0035_cpf.png",
+    "anexos/VAL-0035_comprovante_residencia.pdf",
+    "anexos/VAL-0035_documento_identidade.png"
+  ]
+}

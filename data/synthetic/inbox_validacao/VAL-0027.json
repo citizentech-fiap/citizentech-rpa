@@ -1,0 +1,14 @@
+{
+  "request_id": "VAL-0027",
+  "data_envio": "2026-11-02T19:38:00-03:00",
+  "municipio": "Petrolina",
+  "uf": "PE",
+  "cod_ibge": "2611101",
+  "nome": "Fulano de Tal",
+  "email": "fulano.ficticio89@exemplo.com",
+  "texto": "Preciso regularizar CPF suspenso na Receita Federal antes de abrir conta. Sou de Petrolina/PE, Sítio Amostra.",
+  "anexos": [
+    "anexos/VAL-0027_documento_identidade.png",
+    "anexos/VAL-0027_certidao_civil.png"
+  ]
+}
